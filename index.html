@@ -187,12 +187,51 @@
       </div>
 
       <!-- Teacher Icon -->
-      <div class="teacher-icon" onclick="openTeacherDashboard()" title="Teacher/Staff Dashboard">
+      <div class="teacher-icon" onclick="openTeacherLoginModal()" title="Teacher/Staff Dashboard">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
         </svg>
       </div>
     </main>
+  </div>
+
+  <!-- TEACHER LOGIN MODAL -->
+  <div id="teacherLoginModal" class="modal-overlay">
+    <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl w-full max-w-md fade-in mx-4 border border-slate-200/50 overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="bg-gradient-to-r from-navy-800 to-navy-900 text-white p-6 text-center">
+        <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-indigo-500 rounded-full mx-auto mb-4 flex items-center justify-center shadow-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+        </div>
+        <h2 class="text-xl font-bold">Teacher Login</h2>
+        <p class="text-emerald-300 text-sm">Enter your credentials to access the dashboard</p>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6">
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm text-navy-600 mb-1 font-medium">Username</label>
+            <input type="text" id="teacherUsername" placeholder="Enter username" class="w-full px-4 py-3 border border-slate-200/50 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:scale-[1.01] transition-all duration-300 bg-white/50 backdrop-blur-sm" value="teacher">
+          </div>
+          <div>
+            <label class="block text-sm text-navy-600 mb-1 font-medium">Password</label>
+            <input type="password" id="teacherPassword" placeholder="Enter password" class="w-full px-4 py-3 border border-slate-200/50 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:scale-[1.01] transition-all duration-300 bg-white/50 backdrop-blur-sm" value="teacher123">
+          </div>
+          <p id="loginError" class="text-red-500 text-sm hidden font-medium">Invalid username or password.</p>
+        </div>
+
+        <div class="flex gap-3 mt-6">
+          <button onclick="closeTeacherLoginModal()" class="flex-1 px-4 py-3 bg-slate-100 text-navy-600 rounded-xl font-semibold hover:bg-slate-200 transition-all duration-300">Cancel</button>
+          <button onclick="teacherLogin()" class="flex-1 btn-glow px-4 py-3 bg-gradient-to-r from-emerald-600 to-indigo-600 text-white rounded-xl font-bold shadow-lg transition-all duration-300">Login</button>
+        </div>
+
+        <p class="text-center text-navy-400 text-xs mt-4">Default: teacher / teacher123</p>
+      </div>
+    </div>
   </div>
 
   <!-- TEACHER FULL DASHBOARD -->
@@ -794,6 +833,30 @@
       html2pdf().set({ margin: 10, filename: 'SF9_Report_Card.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } }).from(document.getElementById('reportCardContent')).save();
     }
 
+    // ==================== TEACHER LOGIN MODAL ====================
+    function openTeacherLoginModal() {
+      document.getElementById('teacherLoginModal').classList.add('active');
+      document.getElementById('loginError').classList.add('hidden');
+    }
+
+    function closeTeacherLoginModal() {
+      document.getElementById('teacherLoginModal').classList.remove('active');
+      document.getElementById('teacherUsername').value = 'teacher';
+      document.getElementById('teacherPassword').value = 'teacher123';
+    }
+
+    function teacherLogin() {
+      const username = document.getElementById('teacherUsername').value;
+      const password = document.getElementById('teacherPassword').value;
+
+      if (username === 'teacher' && password === 'teacher123') {
+        closeTeacherLoginModal();
+        openTeacherDashboard();
+      } else {
+        document.getElementById('loginError').classList.remove('hidden');
+      }
+    }
+
     // ==================== TEACHER DASHBOARD ====================
     function openTeacherDashboard() {
       document.getElementById('homepage').style.display = 'none';
@@ -938,6 +1001,10 @@
     // Close modals on outside click
     document.getElementById('developersModal').addEventListener('click', (e) => {
       if (e.target.id === 'developersModal') closeDevelopersModal();
+    });
+
+    document.getElementById('teacherLoginModal').addEventListener('click', (e) => {
+      if (e.target.id === 'teacherLoginModal') closeTeacherLoginModal();
     });
   </script>
 
