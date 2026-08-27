@@ -162,8 +162,11 @@
             <span class="text-emerald-300 text-xs font-medium">System Online</span>
           </div>
           <span class="text-slate-400 text-sm hidden md:block">SY 2025-2026</span>
+          <button onclick="openAboutModal()" class="btn-glow px-4 py-2 bg-navy-700 hover:bg-navy-600 rounded-lg text-sm font-semibold transition-all duration-300">
+            📖 About
+          </button>
           <button onclick="openDevelopersModal()" class="btn-glow px-4 py-2 bg-emerald-600 hover:bg-emerald-700 rounded-lg text-sm font-semibold transition-all duration-300">
-            👨‍💻 About Developers
+            👨‍💻 Developers
           </button>
         </div>
       </div>
@@ -632,6 +635,150 @@
     </div>
   </div>
 
+  <!-- ABOUT MODAL -->
+  <div id="aboutModal" class="modal-overlay">
+    <div class="modal-content bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden mx-4 border border-slate-200/50">
+      
+      <!-- Modal Header -->
+      <div class="bg-gradient-to-r from-navy-800 to-navy-900 text-white p-6 flex justify-between items-center">
+        <div class="flex items-center gap-4">
+          <img src="logo.png" alt="Cabiao SHS Logo" class="w-12 h-12 rounded-xl object-contain bg-white p-1">
+          <div>
+            <h2 class="text-xl font-bold">About the Study</h2>
+            <p class="text-emerald-300 text-sm">Online Student Academic Record Management System</p>
+          </div>
+        </div>
+        <button onclick="closeAboutModal()" class="text-white hover:text-emerald-300 text-2xl transition-colors duration-300">&times;</button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 overflow-y-auto max-h-[calc(90vh-100px)] bg-gradient-to-br from-navy-50 to-indigo-50">
+        
+        <!-- Introduction Section -->
+        <div class="mb-8">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg">
+              <span class="text-white text-lg">📖</span>
+            </div>
+            <h3 class="text-xl font-bold text-navy-800">Introduction</h3>
+          </div>
+          <div class="glass-card p-6 rounded-2xl">
+            <p class="text-navy-700 leading-relaxed mb-4">Many schools use technology to improve teaching, learning, and administrative work. One of the areas where technology is useful is in managing student academic records. Academic records contain important information such as students' grades and academic performance. Using an online system can make these records easier to manage, access, and update.</p>
+            <p class="text-navy-700 leading-relaxed mb-4">Despite the growing use of digital technologies in education, many schools still manage student academic records using manual or paper-based methods. These traditional processes can take a lot of time and may lead to misplaced documents, data entry errors, and delays in retrieving important information. In many cases, parents also have limited access to their children's academic performance because updates are usually provided only during report card distribution or scheduled parent-teacher conferences.</p>
+            <p class="text-navy-700 leading-relaxed">As schools continue to handle increasing amounts of student data, there is a growing need for a more organized, efficient, and secure way of managing academic records.</p>
+          </div>
+        </div>
+
+        <div class="gradient-divider mb-8"></div>
+
+        <!-- Background of the Study Section -->
+        <div class="mb-8">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
+              <span class="text-white text-lg">🔍</span>
+            </div>
+            <h3 class="text-xl font-bold text-navy-800">Background of the Study</h3>
+          </div>
+          <div class="glass-card p-6 rounded-2xl">
+            <p class="text-navy-700 leading-relaxed mb-4">Student Information Systems enable schools to access student data in real time, making it easier for educators and administrators to monitor student progress and make informed decisions. The OECD also notes that these systems help improve the quality of educational data while reducing the time and effort required for administrative work (OECD, 2023).</p>
+            
+            <p class="text-navy-700 leading-relaxed mb-4">Saquin and Marcial (2016) developed an Automated Student Academic Record Management System with a Business Intelligence Approach for DMC College Foundation Incorporated (DMCCFI) in the Philippines. This study supports the present research by demonstrating the importance of implementing a centralized and computerized academic record management system in Philippine educational institutions.</p>
+            
+            <p class="text-navy-700 leading-relaxed mb-4">While Saquin and Marcial (2016) focused on improving the registrar's services in a single college, the present study seeks to develop an Online Student Academic Record Management System that addresses the needs of a different educational institution. The proposed system will provide role-based access for teachers, advisers, registrars, principals, and parents, allowing secure access to academic records and real-time monitoring of student performance.</p>
+            
+            <p class="text-navy-700 leading-relaxed mb-4">In addition, the system will emphasize data privacy, audit trails, and accessibility, making it more suitable for the current digital environment and the specific requirements of the target school.</p>
+            
+            <p class="text-navy-700 leading-relaxed mb-4">Locally, the study focused on the design, development, and implementation of a School Records Management System (SRMS) for Magalalag National High School. It employed both descriptive and developmental research designs. Data were collected through interviews and surveys and analyzed using descriptive statistics.</p>
+            
+            <p class="text-navy-700 leading-relaxed mb-4">For the system development, the researchers applied the Software Development Life Cycle (SDLC) using the Sashimi Model. The findings showed that one of the major problems of the existing manual record management system was the increasing volume of paper documents, which resulted in insufficient storage space and difficulty in organizing records.</p>
+            
+            <p class="text-navy-700 leading-relaxed mb-4">The study also found that regularly monitoring and updating the records management program, with designated personnel responsible for its maintenance, was one of the most effective solutions. Furthermore, the developed School Records Management System achieved a very high level of compliance with the ISO/IEC 25010 Software Quality Standards, indicating that the system met recognized software quality requirements (Rene A. Duruin & Generino P. Siddayao, 2024).</p>
+            
+            <p class="text-navy-700 leading-relaxed">Therefore, this study proposes the Development of an Online Student Academic Record Management System. The system will provide a secure and organized platform for managing student academic records. It will allow teachers to encode grades, advisers and registrars to manage records, principals to monitor academic performance, and parents to view their children's grades through their own accounts. By using this system, the school can reduce paperwork, minimize errors, save time, and provide faster access to academic records.</p>
+          </div>
+        </div>
+
+        <div class="gradient-divider mb-8"></div>
+
+        <!-- Objectives Section -->
+        <div class="mb-8">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg">
+              <span class="text-white text-lg">🎯</span>
+            </div>
+            <h3 class="text-xl font-bold text-navy-800">Objectives of the Study</h3>
+          </div>
+          <div class="glass-card p-6 rounded-2xl">
+            <div class="mb-6">
+              <h4 class="text-lg font-bold text-navy-800 mb-3">General Objective</h4>
+              <p class="text-navy-700 leading-relaxed">The general objective of this study is to design, develop, and implement an Online Student Academic Record Management System for Cabiao Senior High School that will efficiently manage, store, and secure student academic records, replacing the manual and paper-based system to improve accuracy, accessibility, and overall records management.</p>
+            </div>
+            
+            <div>
+              <h4 class="text-lg font-bold text-navy-800 mb-4">Specific Objectives</h4>
+              <div class="space-y-4">
+                <div class="flex gap-3">
+                  <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span class="text-emerald-600 font-bold text-sm">1</span>
+                  </div>
+                  <p class="text-navy-700 leading-relaxed"><strong>To design a centralized database system</strong> that will store and organize student academic records, including personal information, grades, subjects, strand/track enrollment, and attendance in a secure and structured manner.</p>
+                </div>
+                
+                <div class="flex gap-3">
+                  <div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span class="text-indigo-600 font-bold text-sm">2</span>
+                  </div>
+                  <div>
+                    <p class="text-navy-700 leading-relaxed mb-2"><strong>To develop modules for the system that will enable:</strong></p>
+                    <ul class="ml-6 space-y-2">
+                      <li class="text-navy-600 flex items-start gap-2">
+                        <span class="text-emerald-500 mt-1">•</span>
+                        <span><strong>Student Information Management</strong> – registering, updating, and retrieving student records.</span>
+                      </li>
+                      <li class="text-navy-600 flex items-start gap-2">
+                        <span class="text-emerald-500 mt-1">•</span>
+                        <span><strong>Grade Encoding and Management</strong> – allowing teachers to input, compute, and update student grades.</span>
+                      </li>
+                      <li class="text-navy-600 flex items-start gap-2">
+                        <span class="text-emerald-500 mt-1">•</span>
+                        <span><strong>Report Generation</strong> – automatically generating report cards, grade summaries, and academic reports.</span>
+                      </li>
+                      <li class="text-navy-600 flex items-start gap-2">
+                        <span class="text-emerald-500 mt-1">•</span>
+                        <span><strong>User Access Management</strong> – providing role-based access for administrators, teachers, and students.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="flex gap-3">
+                  <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span class="text-emerald-600 font-bold text-sm">3</span>
+                  </div>
+                  <p class="text-navy-700 leading-relaxed"><strong>To implement a secure authentication and authorization mechanism</strong> that ensures only authorized users (administrators, teachers, and students) can access specific features and confidential academic data.</p>
+                </div>
+                
+                <div class="flex gap-3">
+                  <div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span class="text-indigo-600 font-bold text-sm">4</span>
+                  </div>
+                  <p class="text-navy-700 leading-relaxed"><strong>To provide an online platform</strong> that allows students to conveniently view their academic records, grades, and school-related information anytime and anywhere.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center text-navy-400 text-sm">
+          <p>Cabiao Senior High School • Academic Record Management System</p>
+          <p class="text-xs mt-1">School Year 2025-2026</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- DEVELOPERS MODAL -->
   <div id="developersModal" class="modal-overlay">
     <div class="modal-content bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden mx-4 border border-slate-200/50">
@@ -922,6 +1069,15 @@
       document.getElementById('dashPageTitle').textContent = titles[sectionId];
     }
 
+    // ==================== ABOUT MODAL ====================
+    function openAboutModal() {
+      document.getElementById('aboutModal').classList.add('active');
+    }
+
+    function closeAboutModal() {
+      document.getElementById('aboutModal').classList.remove('active');
+    }
+
     // ==================== DEVELOPERS MODAL ====================
     function openDevelopersModal() {
       document.getElementById('developersModal').classList.add('active');
@@ -1045,6 +1201,10 @@
     // Close modals on outside click
     document.getElementById('developersModal').addEventListener('click', (e) => {
       if (e.target.id === 'developersModal') closeDevelopersModal();
+    });
+
+    document.getElementById('aboutModal').addEventListener('click', (e) => {
+      if (e.target.id === 'aboutModal') closeAboutModal();
     });
   </script>
 
