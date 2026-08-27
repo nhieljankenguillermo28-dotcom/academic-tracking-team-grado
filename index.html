@@ -69,7 +69,7 @@
 
     /* Sidebar */
     .sidebar-link { transition: all 0.3s ease-in-out; }
-    .sidebar-link:hover { background: rgba(5,150,105,0.2); }
+    .sidebar-link:hover { background: rgba(5,150,105,0.3); }
     .sidebar-link.active { background: #059669; color: white; }
 
     /* Stat Card */
@@ -196,74 +196,90 @@
   </div>
 
   <!-- TEACHER FULL DASHBOARD -->
-  <div id="teacherDashboard" class="hidden min-h-screen flex bg-navy-50">
+  <div id="teacherDashboard" class="hidden min-h-screen flex flex-col bg-navy-50">
     
-    <!-- Sidebar -->
-    <aside class="w-64 bg-gradient-to-b from-navy-800 to-navy-900 text-white flex flex-col justify-between">
-      <div class="p-5">
-        <div class="flex items-center gap-3 mb-8">
+    <!-- Top Navbar with Navigation -->
+    <header class="glass-dark text-white shadow-lg sticky top-0 z-50">
+      <div class="max-w-full mx-auto px-6 py-4 flex items-center justify-between">
+        
+        <!-- Left: Logo & Title -->
+        <div class="flex items-center gap-4">
           <img src="logo.png" alt="Cabiao SHS Logo" class="w-10 h-10 rounded-lg object-contain bg-white p-1">
           <div>
             <h1 class="text-lg font-bold text-white">Cabiao SHS</h1>
             <p class="text-xs text-emerald-300">Teacher Dashboard</p>
           </div>
         </div>
-        
-        <nav class="space-y-1">
-          <a href="#" class="sidebar-link active flex items-center gap-3 px-4 py-3 rounded-xl font-medium" onclick="showDashSection('dash-overview', this)">
-            <span class="text-lg">📊</span> Overview
+
+        <!-- Center: Navigation Links -->
+        <nav class="hidden lg:flex items-center gap-1">
+          <a href="#" class="sidebar-link active flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-white" onclick="showDashSection('dash-overview', this)">
+            <span>📊</span> Overview
           </a>
-          <a href="#" class="sidebar-link flex items-center gap-3 px-4 py-3 text-slate-300 rounded-xl font-medium" onclick="showDashSection('dash-students', this)">
-            <span class="text-lg">👨‍🎓</span> Students
+          <a href="#" class="sidebar-link flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white" onclick="showDashSection('dash-students', this)">
+            <span>👨‍🎓</span> Students
           </a>
-          <a href="#" class="sidebar-link flex items-center gap-3 px-4 py-3 text-slate-300 rounded-xl font-medium" onclick="showDashSection('dash-grades', this)">
-            <span class="text-lg">📝</span> Grade Entry
+          <a href="#" class="sidebar-link flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white" onclick="showDashSection('dash-grades', this)">
+            <span>📝</span> Grade Entry
           </a>
-          <a href="#" class="sidebar-link flex items-center gap-3 px-4 py-3 text-slate-300 rounded-xl font-medium" onclick="showDashSection('dash-codes', this)">
-            <span class="text-lg">🔑</span> Access Codes
+          <a href="#" class="sidebar-link flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white" onclick="showDashSection('dash-codes', this)">
+            <span>🔑</span> Access Codes
           </a>
-          <a href="#" class="sidebar-link flex items-center gap-3 px-4 py-3 text-slate-300 rounded-xl font-medium" onclick="showDashSection('dash-reports', this)">
-            <span class="text-lg">📄</span> Reports
+          <a href="#" class="sidebar-link flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white" onclick="showDashSection('dash-reports', this)">
+            <span>📄</span> Reports
           </a>
         </nav>
-      </div>
-      
-      <div class="p-4 border-t border-navy-700">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-indigo-500 rounded-full flex items-center justify-center">
-            <span class="text-white text-sm font-bold">T</span>
-          </div>
-          <div>
-            <p class="text-xs text-white font-semibold">Teacher</p>
-            <p class="text-xs text-slate-400">Faculty</p>
-          </div>
-        </div>
-        <button onclick="openDevelopersModal()" class="w-full bg-navy-700 hover:bg-navy-600 text-white py-2 rounded-xl text-sm mb-2 transition-all duration-300 font-medium">
-          👨‍💻 About Developers
-        </button>
-        <button onclick="goHome()" class="w-full bg-gradient-to-r from-emerald-600 to-indigo-600 text-white py-2 rounded-xl text-sm font-semibold hover:shadow-lg transition-all duration-300">
-          ← Back to Home
-        </button>
-      </div>
-    </aside>
 
-    <!-- Main Content -->
-    <main class="flex-1 flex flex-col overflow-hidden">
-      
-      <!-- Top Navbar with Glassmorphism -->
-      <header class="glass border-b border-slate-200/50 px-6 py-4 flex items-center justify-between">
-        <h2 class="text-xl font-bold text-navy-800" id="dashPageTitle">Overview</h2>
+        <!-- Mobile Menu Button -->
+        <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+
+        <!-- Right: Actions -->
         <div class="flex items-center gap-4">
-          <div class="relative">
-            <input type="text" placeholder="Search student..." class="pl-4 pr-10 py-2 border border-slate-200/50 rounded-xl w-64 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:scale-[1.01] transition-all duration-300 bg-white/50 backdrop-blur-sm">
+          <div class="relative hidden md:block">
+            <input type="text" placeholder="Search student..." class="pl-4 pr-10 py-2 border border-slate-600 rounded-xl w-48 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all duration-300 bg-navy-700/50 text-white placeholder-slate-400">
             <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           </div>
-          <button class="relative p-2 text-navy-600 hover:text-emerald-600 transition-colors duration-300">
+          <button class="relative p-2 text-slate-300 hover:text-emerald-400 transition-colors duration-300">
             <span class="text-xl">🔔</span>
             <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">3</span>
           </button>
+          <div class="flex items-center gap-2 px-3 py-1 bg-emerald-500/20 rounded-full">
+            <div class="pulse-dot" style="width:8px;height:8px;"></div>
+            <span class="text-emerald-300 text-xs font-medium hidden md:block">Online</span>
+          </div>
+          <button onclick="openDevelopersModal()" class="px-3 py-2 bg-navy-700 hover:bg-navy-600 text-white rounded-xl text-sm font-medium transition-all duration-300 hidden md:block">
+            👨‍💻 Developers
+          </button>
+          <button onclick="goHome()" class="px-3 py-2 bg-gradient-to-r from-emerald-600 to-indigo-600 text-white rounded-xl text-sm font-semibold hover:shadow-lg transition-all duration-300">
+            ← Home
+          </button>
         </div>
-      </header>
+      </div>
+
+      <!-- Mobile Menu (hidden by default) -->
+      <div id="mobileMenu" class="hidden lg:hidden border-t border-navy-700 px-6 py-4 space-y-2">
+        <a href="#" class="sidebar-link active flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-white" onclick="showDashSection('dash-overview', this); toggleMobileMenu();">
+          <span class="text-lg">📊</span> Overview
+        </a>
+        <a href="#" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-300" onclick="showDashSection('dash-students', this); toggleMobileMenu();">
+          <span class="text-lg">👨‍🎓</span> Students
+        </a>
+        <a href="#" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-300" onclick="showDashSection('dash-grades', this); toggleMobileMenu();">
+          <span class="text-lg">📝</span> Grade Entry
+        </a>
+        <a href="#" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-300" onclick="showDashSection('dash-codes', this); toggleMobileMenu();">
+          <span class="text-lg">🔑</span> Access Codes
+        </a>
+        <a href="#" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-300" onclick="showDashSection('dash-reports', this); toggleMobileMenu();">
+          <span class="text-lg">📄</span> Reports
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col overflow-hidden">
 
       <!-- OVERVIEW SECTION -->
       <div id="dash-overview" class="dashboard-section active p-6 space-y-6 overflow-y-auto">
@@ -798,6 +814,10 @@
     function openTeacherDashboard() {
       document.getElementById('homepage').style.display = 'none';
       document.getElementById('teacherDashboard').classList.remove('hidden');
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobileMenu').classList.toggle('hidden');
     }
 
     function goHome() {
