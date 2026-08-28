@@ -159,6 +159,15 @@
     /* ===== BADGE BLOOM ===== */
     .badge-bloom { animation: badgePulse 2s ease-in-out infinite; }
     @keyframes badgePulse { 0%, 100% { box-shadow: 0 0 5px rgba(16,185,129,0.3); } 50% { box-shadow: 0 0 15px rgba(16,185,129,0.6), 0 0 25px rgba(16,185,129,0.3); } }
+
+    /* ===== PRINT STYLES ===== */
+    @media print {
+      body * { visibility: hidden !important; }
+      #printableReportCard, #printableReportCard * { visibility: visible !important; }
+      #printableReportCard { position: absolute; left: 0; top: 0; width: 100%; background: white !important; box-shadow: none !important; }
+      .no-print { display: none !important; }
+      header, nav, .teacher-icon, .modal-overlay, .btn-glow, .sidebar-link, .glass-dark { display: none !important; }
+    }
   </style>
 </head>
 <body class="min-h-screen bg-navy-50">
@@ -259,13 +268,76 @@
         <p class="text-center text-navy-400 text-xs mt-6 font-medium">Cabiao, Nueva Ecija • School Year 2025-2026</p>
       </div>
 
-      <!-- Teacher Icon -->
-      <div class="teacher-icon teacher-icon-reveal" onclick="openTeacherDashboard()" title="Teacher/Staff Dashboard">
+      <!-- Staff Access Icon -->
+      <div class="teacher-icon teacher-icon-reveal" onclick="openRoleSelectionModal()" title="Staff Access Portal">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
         </svg>
       </div>
     </main>
+  </div>
+
+  <!-- ROLE SELECTION MODAL -->
+  <div id="roleSelectionModal" class="modal-overlay">
+    <div class="modal-content bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl w-full max-w-lg mx-4 border border-slate-200/50 overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="bg-gradient-to-r from-navy-800 to-navy-900 text-white p-6 text-center">
+        <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-indigo-500 rounded-full mx-auto mb-4 flex items-center justify-center shadow-lg bloom-glow">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+          </svg>
+        </div>
+        <h2 class="text-xl font-bold">Select Access Portal</h2>
+        <p class="text-emerald-300 text-sm">Choose your role to continue</p>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 space-y-4">
+        
+        <!-- Teacher Access Card -->
+        <div onclick="openTeacherDashboard()" class="group glass-card p-5 rounded-2xl cursor-pointer border-2 border-transparent hover:border-emerald-400 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all duration-300">
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-emerald-500/30 transition-all duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-lg font-bold text-navy-800 group-hover:text-emerald-600 transition-colors">Teacher Access</h3>
+              <p class="text-navy-500 text-sm">Class sections, grade encoding, and parent code generator</p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-navy-400 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Registrar Access Card -->
+        <div onclick="openRegistrarDashboard()" class="group glass-card p-5 rounded-2xl cursor-pointer border-2 border-transparent hover:border-indigo-400 hover:shadow-[0_0_30px_rgba(99,102,241,0.3)] transition-all duration-300">
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-indigo-500/30 transition-all duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-lg font-bold text-navy-800 group-hover:text-indigo-600 transition-colors">Registrar Access</h3>
+              <p class="text-navy-500 text-sm">Full admin controls, master database, and report printing</p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-navy-400 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 pb-6">
+        <button onclick="closeRoleSelectionModal()" class="w-full px-4 py-3 bg-slate-100 text-navy-600 rounded-xl font-semibold hover:bg-slate-200 transition-all duration-300">Cancel</button>
+      </div>
+    </div>
   </div>
 
   <!-- TEACHER FULL DASHBOARD -->
@@ -575,6 +647,223 @@
             <div class="flex items-end">
               <button class="btn-glow w-full px-6 py-2 bg-gradient-to-r from-emerald-600 to-indigo-600 text-white rounded-xl text-sm font-bold">Generate</button>
             </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- REGISTRAR FULL DASHBOARD -->
+  <div id="registrarDashboard" class="hidden min-h-screen flex flex-col bg-navy-50">
+    
+    <!-- Top Navbar -->
+    <header class="glass-dark text-white shadow-lg sticky top-0 z-50">
+      <div class="max-w-full mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <img src="logo.png" alt="Cabiao SHS Logo" class="w-10 h-10 rounded-lg object-contain bg-white p-1">
+          <div>
+            <h1 class="text-lg font-bold text-white">Cabiao SHS</h1>
+            <p class="text-xs text-indigo-300">Registrar Dashboard</p>
+          </div>
+        </div>
+        <nav class="hidden lg:flex items-center gap-1">
+          <a href="#" class="sidebar-link active flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-white" onclick="showRegDashSection('reg-overview', this)">
+            <span>📊</span> Overview
+          </a>
+          <a href="#" class="sidebar-link flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white" onclick="showRegDashSection('reg-students', this)">
+            <span>👨‍🎓</span> Students
+          </a>
+          <a href="#" class="sidebar-link flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white" onclick="showRegDashSection('reg-grades', this)">
+            <span>📝</span> Grade Entry
+          </a>
+          <a href="#" class="sidebar-link flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white" onclick="showRegDashSection('reg-codes', this)">
+            <span>🔑</span> Access Codes
+          </a>
+          <a href="#" class="sidebar-link flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white" onclick="showRegDashSection('reg-print', this)">
+            <span>🖨️</span> Print Reports
+          </a>
+          <a href="#" class="sidebar-link flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white" onclick="showRegDashSection('reg-audit', this)">
+            <span>📋</span> Audit Logs
+          </a>
+        </nav>
+        <button onclick="toggleRegMobileMenu()" class="lg:hidden p-2 text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+        <div class="flex items-center gap-4">
+          <div class="hidden md:flex items-center gap-2 px-3 py-1 bg-indigo-500/20 rounded-full badge-bloom">
+            <div class="ping-dot"></div>
+            <span class="text-indigo-300 text-xs font-medium">Admin</span>
+          </div>
+          <button onclick="openDevelopersModal()" class="px-3 py-2 bg-navy-700 hover:bg-navy-600 text-white rounded-xl text-sm font-medium transition-all duration-300 hidden md:block">👨‍💻 Developers</button>
+          <button onclick="goHome()" class="px-3 py-2 bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-xl text-sm font-semibold hover:shadow-lg transition-all duration-300">← Home</button>
+        </div>
+      </div>
+      <div id="regMobileMenu" class="hidden lg:hidden border-t border-navy-700 px-6 py-4 space-y-2">
+        <a href="#" class="sidebar-link active flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-white" onclick="showRegDashSection('reg-overview', this); toggleRegMobileMenu();"><span class="text-lg">📊</span> Overview</a>
+        <a href="#" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-300" onclick="showRegDashSection('reg-students', this); toggleRegMobileMenu();"><span class="text-lg">👨‍🎓</span> Students</a>
+        <a href="#" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-300" onclick="showRegDashSection('reg-grades', this); toggleRegMobileMenu();"><span class="text-lg">📝</span> Grade Entry</a>
+        <a href="#" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-300" onclick="showRegDashSection('reg-codes', this); toggleRegMobileMenu();"><span class="text-lg">🔑</span> Access Codes</a>
+        <a href="#" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-300" onclick="showRegDashSection('reg-print', this); toggleRegMobileMenu();"><span class="text-lg">🖨️</span> Print Reports</a>
+        <a href="#" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-300" onclick="showRegDashSection('reg-audit', this); toggleRegMobileMenu();"><span class="text-lg">📋</span> Audit Logs</a>
+      </div>
+    </header>
+
+    <main class="flex-1 flex flex-col overflow-hidden">
+      
+      <!-- OVERVIEW -->
+      <div id="reg-overview" class="dashboard-section active p-6 space-y-6 overflow-y-auto">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="stat-card bg-white/80 backdrop-blur-sm p-5 rounded-2xl shadow-sm border border-slate-200/50">
+            <div class="flex items-center justify-between mb-3">
+              <p class="text-sm text-navy-500 font-medium">Total Students</p>
+              <div class="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center"><span class="text-lg">👨‍🎓</span></div>
+            </div>
+            <p class="text-3xl font-extrabold text-navy-800"><span id="regTotalStudents">0</span></p>
+          </div>
+          <div class="stat-card bg-white/80 backdrop-blur-sm p-5 rounded-2xl shadow-sm border border-slate-200/50">
+            <div class="flex items-center justify-between mb-3">
+              <p class="text-sm text-navy-500 font-medium">Active Codes</p>
+              <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center"><span class="text-lg">🔑</span></div>
+            </div>
+            <p class="text-3xl font-extrabold text-emerald-600" id="regActiveCodes">0</p>
+          </div>
+          <div class="stat-card bg-white/80 backdrop-blur-sm p-5 rounded-2xl shadow-sm border border-slate-200/50">
+            <div class="flex items-center justify-between mb-3">
+              <p class="text-sm text-navy-500 font-medium">Reports Printed</p>
+              <div class="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center"><span class="text-lg">🖨️</span></div>
+            </div>
+            <p class="text-3xl font-extrabold text-navy-800">0</p>
+          </div>
+          <div class="stat-card bg-white/80 backdrop-blur-sm p-5 rounded-2xl shadow-sm border border-slate-200/50">
+            <div class="flex items-center justify-between mb-3">
+              <p class="text-sm text-navy-500 font-medium">Audit Entries</p>
+              <div class="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center"><span class="text-lg">📋</span></div>
+            </div>
+            <p class="text-3xl font-extrabold text-orange-500">0</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STUDENTS -->
+      <div id="reg-students" class="dashboard-section p-6 space-y-6 overflow-y-auto">
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-slate-200/50 p-5">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-bold text-navy-800">Student Master Database</h3>
+            <button class="btn-glow px-4 py-2 bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-xl text-sm font-semibold">+ Add Student</button>
+          </div>
+          <table class="w-full text-left text-sm text-navy-700">
+            <thead class="border-b border-slate-200/50">
+              <tr>
+                <th class="py-3 px-4 font-semibold text-navy-600">LRN</th>
+                <th class="py-3 px-4 font-semibold text-navy-600">Name</th>
+                <th class="py-3 px-4 font-semibold text-navy-600">Grade</th>
+                <th class="py-3 px-4 font-semibold text-navy-600">Section</th>
+                <th class="py-3 px-4 font-semibold text-navy-600">Strand</th>
+                <th class="py-3 px-4 font-semibold text-navy-600">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y" id="regStudentsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- GRADE ENTRY -->
+      <div id="reg-grades" class="dashboard-section p-6 space-y-6 overflow-y-auto">
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-slate-200/50 p-5">
+          <h3 class="text-lg font-bold text-navy-800 mb-4">Grade Entry (DepEd Format)</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label class="block text-sm text-navy-600 mb-1 font-medium">Select Student</label>
+              <select id="regGradeStudentSelect" class="w-full px-4 py-2 border border-slate-200/50 rounded-xl text-sm bg-white/50"><option value="">-- Select Student --</option></select>
+            </div>
+            <div>
+              <label class="block text-sm text-navy-600 mb-1 font-medium">Quarter</label>
+              <select id="regQuarterSelect" class="w-full px-4 py-2 border border-slate-200/50 rounded-xl text-sm bg-white/50">
+                <option value="1">Quarter 1</option><option value="2">Quarter 2</option><option value="3">Quarter 3</option><option value="4">Quarter 4</option>
+              </select>
+            </div>
+          </div>
+          <div class="bg-gradient-to-br from-emerald-50 to-indigo-50 p-4 rounded-2xl mb-4 border border-emerald-200/50">
+            <h4 class="text-sm font-bold text-navy-700 mb-3">Written Works (30%)</h4>
+            <div class="grid grid-cols-4 gap-3">
+              <div><label class="block text-xs text-navy-500 mb-1">WW1</label><input type="number" id="regWw1" min="0" max="100" class="w-full px-3 py-2 border border-slate-200/50 rounded-xl text-sm" placeholder="0-100"></div>
+              <div><label class="block text-xs text-navy-500 mb-1">WW2</label><input type="number" id="regWw2" min="0" max="100" class="w-full px-3 py-2 border border-slate-200/50 rounded-xl text-sm" placeholder="0-100"></div>
+              <div><label class="block text-xs text-navy-500 mb-1">WW3</label><input type="number" id="regWw3" min="0" max="100" class="w-full px-3 py-2 border border-slate-200/50 rounded-xl text-sm" placeholder="0-100"></div>
+              <div><label class="block text-xs text-navy-500 mb-1">WW4</label><input type="number" id="regWw4" min="0" max="100" class="w-full px-3 py-2 border border-slate-200/50 rounded-xl text-sm" placeholder="0-100"></div>
+            </div>
+          </div>
+          <div class="bg-gradient-to-br from-indigo-50 to-emerald-50 p-4 rounded-2xl mb-4 border border-indigo-200/50">
+            <h4 class="text-sm font-bold text-navy-700 mb-3">Performance Tasks (50%)</h4>
+            <div class="grid grid-cols-4 gap-3">
+              <div><label class="block text-xs text-navy-500 mb-1">PT1</label><input type="number" id="regPt1" min="0" max="100" class="w-full px-3 py-2 border border-slate-200/50 rounded-xl text-sm" placeholder="0-100"></div>
+              <div><label class="block text-xs text-navy-500 mb-1">PT2</label><input type="number" id="regPt2" min="0" max="100" class="w-full px-3 py-2 border border-slate-200/50 rounded-xl text-sm" placeholder="0-100"></div>
+              <div><label class="block text-xs text-navy-500 mb-1">PT3</label><input type="number" id="regPt3" min="0" max="100" class="w-full px-3 py-2 border border-slate-200/50 rounded-xl text-sm" placeholder="0-100"></div>
+              <div><label class="block text-xs text-navy-500 mb-1">PT4</label><input type="number" id="regPt4" min="0" max="100" class="w-full px-3 py-2 border border-slate-200/50 rounded-xl text-sm" placeholder="0-100"></div>
+            </div>
+          </div>
+          <div class="bg-gradient-to-br from-navy-50 to-indigo-50 p-4 rounded-2xl mb-4 border border-navy-200/50">
+            <h4 class="text-sm font-bold text-navy-700 mb-3">Quarterly Exam (20%)</h4>
+            <div class="grid grid-cols-4 gap-3">
+              <div><label class="block text-xs text-navy-500 mb-1">QE Score</label><input type="number" id="regQe" min="0" max="100" class="w-full px-3 py-2 border border-slate-200/50 rounded-xl text-sm" placeholder="0-100"></div>
+            </div>
+          </div>
+          <button onclick="regComputeGrade()" class="btn-glow px-6 py-2 bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-xl text-sm font-bold">Compute & Save</button>
+        </div>
+      </div>
+
+      <!-- ACCESS CODES -->
+      <div id="reg-codes" class="dashboard-section p-6 space-y-6 overflow-y-auto">
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-slate-200/50 p-5">
+          <h3 class="text-lg font-bold text-navy-800 mb-4">Generate Parent Access Code</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div>
+              <label class="block text-sm text-navy-600 mb-1 font-medium">Select Student</label>
+              <select id="regCodeStudentSelect" class="w-full px-4 py-2 border border-slate-200/50 rounded-xl text-sm bg-white/50"><option value="">-- Select Student --</option></select>
+            </div>
+            <div>
+              <label class="block text-sm text-navy-600 mb-1 font-medium">Expiration</label>
+              <select id="regExpirationSelect" class="w-full px-4 py-2 border border-slate-200/50 rounded-xl text-sm bg-white/50">
+                <option value="1">1 Hour</option><option value="24" selected>24 Hours</option><option value="72">3 Days</option><option value="168">7 Days</option>
+              </select>
+            </div>
+            <div class="flex items-end">
+              <button onclick="regGenerateAccessCode()" class="btn-glow w-full px-6 py-2 bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-xl text-sm font-bold">Generate Code</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRINT REPORTS -->
+      <div id="reg-print" class="dashboard-section p-6 space-y-6 overflow-y-auto">
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-slate-200/50 p-5">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-bold text-navy-800">Direct Print SF9 Report Card</h3>
+            <button onclick="batchPrintReportCards()" class="btn-glow px-4 py-2 bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-xl text-sm font-semibold">🖨️ Batch Print Selected</button>
+          </div>
+          <table class="w-full text-left text-sm text-navy-700">
+            <thead class="border-b border-slate-200/50">
+              <tr>
+                <th class="py-3 px-4 font-semibold text-navy-600"><input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll()" class="w-4 h-4 accent-indigo-600"></th>
+                <th class="py-3 px-4 font-semibold text-navy-600">LRN</th>
+                <th class="py-3 px-4 font-semibold text-navy-600">Name</th>
+                <th class="py-3 px-4 font-semibold text-navy-600">Grade</th>
+                <th class="py-3 px-4 font-semibold text-navy-600">Section</th>
+                <th class="py-3 px-4 font-semibold text-navy-600">Average</th>
+                <th class="py-3 px-4 font-semibold text-navy-600">Action</th>
+              </tr>
+            </thead>
+            <tbody id="regPrintTableBody" class="divide-y"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- AUDIT LOGS -->
+      <div id="reg-audit" class="dashboard-section p-6 space-y-6 overflow-y-auto">
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-slate-200/50 p-5">
+          <h3 class="text-lg font-bold text-navy-800 mb-4">System Audit Logs</h3>
+          <div id="auditLogsList" class="space-y-3">
+            <p class="text-navy-400 text-center py-4">No audit entries yet</p>
           </div>
         </div>
       </div>
@@ -1112,6 +1401,15 @@
       document.getElementById('dashPageTitle').textContent = titles[sectionId];
     }
 
+    // ==================== ROLE SELECTION MODAL ====================
+    function openRoleSelectionModal() {
+      document.getElementById('roleSelectionModal').classList.add('active');
+    }
+
+    function closeRoleSelectionModal() {
+      document.getElementById('roleSelectionModal').classList.remove('active');
+    }
+
     // ==================== ABOUT MODAL ====================
     function openAboutModal() {
       document.getElementById('aboutModal').classList.add('active');
@@ -1128,6 +1426,162 @@
 
     function closeDevelopersModal() {
       document.getElementById('developersModal').classList.remove('active');
+    }
+
+    // ==================== REGISTRAR DASHBOARD ====================
+    function openRegistrarDashboard() {
+      closeRoleSelectionModal();
+      document.getElementById('homepage').style.display = 'none';
+      document.getElementById('registrarDashboard').classList.remove('hidden');
+      renderRegStudentsTable();
+      renderRegPrintTable();
+      populateRegDropdowns();
+      document.getElementById('regTotalStudents').textContent = students.length;
+      document.getElementById('regActiveCodes').textContent = generatedCodes.filter(c => c.status === 'active').length;
+    }
+
+    function toggleRegMobileMenu() {
+      document.getElementById('regMobileMenu').classList.toggle('hidden');
+    }
+
+    function showRegDashSection(sectionId, btn) {
+      document.querySelectorAll('#registrarDashboard .dashboard-section').forEach(s => s.classList.remove('active'));
+      document.getElementById(sectionId).classList.add('active');
+      document.querySelectorAll('#registrarDashboard .sidebar-link').forEach(l => l.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function renderRegStudentsTable() {
+      document.getElementById('regStudentsTableBody').innerHTML = students.map(s => `
+        <tr class="table-row">
+          <td class="py-3 px-4 font-mono text-sm">${s.lrn}</td>
+          <td class="py-3 px-4 font-semibold text-navy-800">${s.name}</td>
+          <td class="py-3 px-4">${s.grade}</td>
+          <td class="py-3 px-4">${s.section}</td>
+          <td class="py-3 px-4">${s.strand}</td>
+          <td class="py-3 px-4 space-x-2">
+            <button class="text-indigo-600 hover:underline text-sm font-medium">Edit</button>
+            <button class="text-red-600 hover:underline text-sm font-medium">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderRegPrintTable() {
+      document.getElementById('regPrintTableBody').innerHTML = students.map(s => {
+        const avg = Math.round(Object.values(s.grades).reduce((sum, q) => sum + Math.round((q.ww * 0.30) + (q.pt * 0.50) + (q.qe * 0.20)), 0) / 4);
+        return `
+        <tr class="table-row">
+          <td class="py-3 px-4"><input type="checkbox" class="student-checkbox w-4 h-4 accent-indigo-600" data-id="${s.id}"></td>
+          <td class="py-3 px-4 font-mono text-sm">${s.lrn}</td>
+          <td class="py-3 px-4 font-semibold text-navy-800">${s.name}</td>
+          <td class="py-3 px-4">${s.grade}</td>
+          <td class="py-3 px-4">${s.section}</td>
+          <td class="py-3 px-4 font-bold text-indigo-600">${avg}</td>
+          <td class="py-3 px-4">
+            <button onclick="printSingleStudent(${s.id})" class="btn-glow px-3 py-1 bg-indigo-600 text-white rounded-lg text-xs font-semibold">🖨️ Print</button>
+          </td>
+        </tr>
+      `}).join('');
+    }
+
+    function populateRegDropdowns() {
+      ['regGradeStudentSelect', 'regCodeStudentSelect'].forEach(id => {
+        const select = document.getElementById(id);
+        if (!select) return;
+        select.innerHTML = '<option value="">-- Select Student --</option>';
+        students.forEach(s => {
+          const opt = document.createElement('option');
+          opt.value = s.id;
+          opt.textContent = `${s.name} - ${s.lrn}`;
+          select.appendChild(opt);
+        });
+      });
+    }
+
+    function regComputeGrade() {
+      const studentId = parseInt(document.getElementById('regGradeStudentSelect').value);
+      if (!studentId) { alert('Select a student'); return; }
+      const ww = ['regWw1','regWw2','regWw3','regWw4'].map(id => parseFloat(document.getElementById(id).value) || 0);
+      const pt = ['regPt1','regPt2','regPt3','regPt4'].map(id => parseFloat(document.getElementById(id).value) || 0);
+      const qe = parseFloat(document.getElementById('regQe').value) || 0;
+      const wwAvg = ww.reduce((a,b) => a+b, 0) / 4;
+      const ptAvg = pt.reduce((a,b) => a+b, 0) / 4;
+      const grade = Math.round((wwAvg * 0.30) + (ptAvg * 0.50) + (qe * 0.20));
+      alert(`Quarterly Grade: ${grade}\nWW Avg: ${wwAvg.toFixed(1)} (30%)\nPT Avg: ${ptAvg.toFixed(1)} (50%)\nQE: ${qe} (20%)`);
+    }
+
+    function regGenerateAccessCode() {
+      const studentId = parseInt(document.getElementById('regCodeStudentSelect').value);
+      const expirationHours = parseInt(document.getElementById('regExpirationSelect').value);
+      if (!studentId) { alert('Select a student'); return; }
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
+      const expiration = new Date();
+      expiration.setHours(expiration.getHours() + expirationHours);
+      const student = students.find(s => s.id === studentId);
+      generatedCodes.push({ id: Date.now(), studentId, studentName: student.name, studentLRN: student.lrn, code, createdAt: new Date().toISOString(), expiration: expiration.toISOString(), expirationHours, status: 'active' });
+      saveToStorage();
+      alert(`Access Code Generated!\n\nCode: ${code}\nStudent: ${student.name}\nExpires in: ${expirationHours} hours`);
+      document.getElementById('regActiveCodes').textContent = generatedCodes.filter(c => c.status === 'active').length;
+    }
+
+    // ==================== PRINT FUNCTIONALITY ====================
+    function toggleSelectAll() {
+      const checked = document.getElementById('selectAllCheckbox').checked;
+      document.querySelectorAll('.student-checkbox').forEach(cb => cb.checked = checked);
+    }
+
+    function printSingleStudent(studentId) {
+      const student = students.find(s => s.id === studentId);
+      if (!student) return;
+      generatePrintableReport(student);
+    }
+
+    function batchPrintReportCards() {
+      const selected = Array.from(document.querySelectorAll('.student-checkbox:checked')).map(cb => parseInt(cb.dataset.id));
+      if (selected.length === 0) { alert('Select at least one student'); return; }
+      let printContent = '';
+      selected.forEach((id, index) => {
+        const student = students.find(s => s.id === id);
+        if (student) {
+          printContent += generateReportCardHTML(student);
+          if (index < selected.length - 1) printContent += '<div style="page-break-after: always;"></div>';
+        }
+      });
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`<!DOCTYPE html><html><head><title>Report Cards</title><style>@page{size:A4 portrait;margin:15mm;}body{font-family:'Segoe UI',Arial,sans-serif;margin:0;padding:20px;color:#000;}h1,h2,h3{text-align:center;}.report-card{border:2px solid #000;padding:20px;margin-bottom:20px;}.header{text-align:center;border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:15px;}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:15px;}.info-grid p{margin:5px 0;font-size:14px;}table{width:100%;border-collapse:collapse;margin-bottom:15px;}th,td{border:1px solid #000;padding:8px;text-align:center;font-size:13px;}th{background:#f0f0f0;font-weight:bold;}.footer{margin-top:20px;font-size:13px;}.sig-line{margin-top:30px;border-top:1px solid #000;width:200px;display:inline-block;}</style></head><body>${printContent}</body></html>`);
+      printWindow.document.close();
+      setTimeout(() => printWindow.print(), 500);
+    }
+
+    function generateReportCardHTML(student) {
+      const quarters = ['q1', 'q2', 'q3', 'q4'];
+      let totalAvg = 0;
+      let rows = '';
+      quarters.forEach((q, i) => {
+        const g = student.grades[q];
+        const qg = Math.round((g.ww * 0.30) + (g.pt * 0.50) + (g.qe * 0.20));
+        totalAvg += qg;
+        rows += `<tr><td>Quarter ${i+1}</td><td>${g.ww}</td><td>${g.pt}</td><td>${g.qe}</td><td><strong>${qg}</strong></td></tr>`;
+      });
+      const avg = Math.round(totalAvg / 4);
+      return `<div class="report-card"><div class="header"><p style="margin:2px;font-size:12px;">Republic of the Philippines</p><p style="margin:2px;font-size:12px;">Department of Education</p><h2 style="margin:10px 0 5px;">CABIAO SENIOR HIGH SCHOOL</h2><p style="margin:2px;font-size:12px;">Cabiao, Nueva Ecija</p><h3 style="margin:15px 0 5px;color:#059669;">REPORT CARD</h3><p style="margin:2px;font-size:11px;">School Form 9 (SF9) • SY 2025-2026</p></div><div class="info-grid"><div><p><strong>Name:</strong> ${student.lastName}, ${student.firstName}</p><p><strong>LRN:</strong> ${student.lrn}</p><p><strong>Grade:</strong> ${student.grade}</p></div><div><p><strong>Section:</strong> ${student.section}</p><p><strong>Strand:</strong> ${student.strand}</p><p><strong>School Year:</strong> 2025-2026</p></div></div><table><thead><tr><th>Quarter</th><th>Written Works (30%)</th><th>Performance Tasks (50%)</th><th>Quarterly Exam (20%)</th><th>Quarterly Grade</th></tr></thead><tbody>${rows}</tbody><tfoot><tr><td colspan="4"><strong>GENERAL AVERAGE</strong></td><td><strong style="font-size:18px;">${avg}</strong></td></tr></tfoot></table><p><strong>Remarks:</strong> ${avg >= 75 ? 'PASSED' : 'FAILED'}</p><div class="footer"><p>Parent/Guardian Signature: <span class="sig-line"></span></p><p>Adviser Signature: <span class="sig-line"></span></p><p style="margin-top:15px;font-size:11px;">Generated on: ${new Date().toLocaleDateString()} | Verification: VRF-${Math.random().toString(36).substr(2,8).toUpperCase()}</p></div></div>`;
+    }
+
+    function generatePrintableReport(student) {
+      const html = generateReportCardHTML(student);
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`<!DOCTYPE html><html><head><title>Report Card - ${student.name}</title><style>@page{size:A4 portrait;margin:15mm;}body{font-family:'Segoe UI',Arial,sans-serif;margin:0;padding:20px;color:#000;}h1,h2,h3{text-align:center;}.report-card{border:2px solid #000;padding:20px;}.header{text-align:center;border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:15px;}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:15px;}.info-grid p{margin:5px 0;font-size:14px;}table{width:100%;border-collapse:collapse;margin-bottom:15px;}th,td{border:1px solid #000;padding:8px;text-align:center;font-size:13px;}th{background:#f0f0f0;font-weight:bold;}.footer{margin-top:20px;font-size:13px;}.sig-line{margin-top:30px;border-top:1px solid #000;width:200px;display:inline-block;}</style></head><head>${html}</body></html>`);
+      printWindow.document.close();
+      setTimeout(() => printWindow.print(), 500);
+    }
+
+    function addAuditLog(action) {
+      const logList = document.getElementById('auditLogsList');
+      const entry = document.createElement('div');
+      entry.className = 'flex items-center gap-3 p-3 bg-indigo-50/50 rounded-xl';
+      entry.innerHTML = `<div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center"><span class="text-indigo-600 text-sm">📋</span></div><div><p class="text-sm font-semibold text-navy-800">${action}</p><p class="text-xs text-navy-500">${new Date().toLocaleString()}</p></div>`;
+      logList.prepend(entry);
     }
 
     // ==================== DROPDOWNS ====================
@@ -1248,6 +1702,10 @@
 
     document.getElementById('aboutModal').addEventListener('click', (e) => {
       if (e.target.id === 'aboutModal') closeAboutModal();
+    });
+
+    document.getElementById('roleSelectionModal').addEventListener('click', (e) => {
+      if (e.target.id === 'roleSelectionModal') closeRoleSelectionModal();
     });
   </script>
 
