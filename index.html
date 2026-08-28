@@ -27,18 +27,29 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Plus Jakarta Sans', sans-serif; will-change: transform; }
 
-    /* ===== INTENSE AMBIENT BACKGROUND ORBS ===== */
+    /* ===== STAGGERED PAGE REVEAL ANIMATIONS ===== */
+    .header-reveal { animation: headerSlideDown 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; opacity: 0; transform: translateY(-20px); }
+    @keyframes headerSlideDown { to { opacity: 1; transform: translateY(0); } }
+
+    .card-reveal { animation: cardScaleUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s forwards; opacity: 0; transform: scale(0.95); }
+    @keyframes cardScaleUp { to { opacity: 1; transform: scale(1); } }
+
+    .teacher-icon-reveal { animation: teacherIconPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards; opacity: 0; transform: translateY(20px); }
+    @keyframes teacherIconPop { to { opacity: 1; transform: translateY(0); } }
+
+    /* ===== FLOATING AMBIENT BACKGROUND MOTION ===== */
+    .ambient-orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.5; animation: floatOrb 12s ease-in-out infinite; pointer-events: none; will-change: transform; }
+    @keyframes floatOrb { 0%, 100% { transform: translate(0px, 0px) scale(1); } 50% { transform: translate(30px, -20px) scale(1.1); } }
+
+    .ambient-orb-1 { width: 400px; height: 400px; background: radial-gradient(circle, #059669 0%, rgba(6,182,212,0.3) 50%, transparent 70%); top: 5%; left: 10%; animation-delay: 0s; }
+    .ambient-orb-2 { width: 350px; height: 350px; background: radial-gradient(circle, #1e293b 0%, rgba(5,150,105,0.2) 50%, transparent 70%); top: 55%; right: 5%; animation-delay: 3s; }
+    .ambient-orb-3 { width: 300px; height: 300px; background: radial-gradient(circle, #4f46e5 0%, rgba(6,182,212,0.3) 50%, transparent 70%); bottom: 15%; left: 25%; animation-delay: 6s; }
+    .ambient-orb-4 { width: 250px; height: 250px; background: radial-gradient(circle, #06b6d4 0%, rgba(5,150,105,0.2) 50%, transparent 70%); top: 30%; left: 50%; animation-delay: 9s; }
+
+    /* ===== INTENSE AMBIENT BACKGROUND GLOW ===== */
     .hero-bg { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); position: relative; overflow: hidden; }
     .hero-bg::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 30% 50%, rgba(5,150,105,0.2) 0%, transparent 50%), radial-gradient(circle at 70% 50%, rgba(79,70,229,0.2) 0%, transparent 50%); animation: glow 8s ease-in-out infinite alternate; }
     @keyframes glow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-    /* Floating Gradient Orbs - Larger & More Vibrant */
-    .ambient-orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.5; animation: float 6s ease-in-out infinite; pointer-events: none; will-change: transform; }
-    .ambient-orb-1 { width: 400px; height: 400px; background: radial-gradient(circle, #059669 0%, rgba(6,182,212,0.3) 50%, transparent 70%); top: 5%; left: 10%; animation-delay: 0s; }
-    .ambient-orb-2 { width: 350px; height: 350px; background: radial-gradient(circle, #1e293b 0%, rgba(5,150,105,0.2) 50%, transparent 70%); top: 55%; right: 5%; animation-delay: 2s; }
-    .ambient-orb-3 { width: 300px; height: 300px; background: radial-gradient(circle, #4f46e5 0%, rgba(6,182,212,0.3) 50%, transparent 70%); bottom: 15%; left: 25%; animation-delay: 4s; }
-    .ambient-orb-4 { width: 250px; height: 250px; background: radial-gradient(circle, #06b6d4 0%, rgba(5,150,105,0.2) 50%, transparent 70%); top: 30%; left: 50%; animation-delay: 3s; }
-    @keyframes float { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-25px) scale(1.08); } }
 
     /* ===== GLASSMORPHISM EFFECTS ===== */
     .glass { background: rgba(255,255,255,0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); }
@@ -67,18 +78,22 @@
     @keyframes pingRing { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(2); opacity: 0; } }
 
     /* Card Hover */
-    .card-hover { transition: all 0.3s ease-out; }
+    .card-hover { transition: all 0.3s ease-out; will-change: transform, box-shadow; }
     .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.15), 0 0 25px rgba(16,185,129,0.3); }
 
-    /* Button Hover with Bloom */
+    /* ===== BUTTON & CARD MICRO-INTERACTIONS ===== */
     .btn-glow { transition: all 0.3s ease-out; will-change: transform, box-shadow; }
     .btn-glow:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(150,105,0.4), 0 0 25px rgba(16,185,129,0.5); }
-    .btn-glow:active { transform: translateY(0); box-shadow: 0 5px 15px rgba(150,105,0.3); }
+    .btn-glow:active { transform: scale(0.95) translateY(0); box-shadow: 0 5px 15px rgba(150,105,0.3); transition: all 0.1s ease-out; }
 
-    /* ===== INTENSE GLOWING 6-DIGIT PASSCODE INPUT ===== */
+    /* ===== 6-DIGIT CODE BOX FEEDBACK ===== */
     .digit-input { width: 52px; height: 62px; text-align: center; font-size: 24px; font-weight: 700; border: 2px solid #e2e8f0; border-radius: 12px; transition: all 0.3s ease-out; background: rgba(255,255,255,0.9); backdrop-filter: blur(8px); will-change: box-shadow, transform; }
     .digit-input:focus { border-color: #34d399; box-shadow: 0 0 0 4px rgba(52,211,153,0.6), 0 0 30px rgba(52,211,153,0.5), 0 0 60px rgba(52,211,153,0.3), inset 0 0 15px rgba(52,211,153,0.2); outline: none; background: white; transform: scale(1.08); }
     .digit-input.filled { border-color: #059669; box-shadow: 0 0 20px rgba(5,150,105,0.4), 0 0 40px rgba(5,150,105,0.2), inset 0 0 10px rgba(5,150,105,0.15); background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(236,253,245,1) 100%); text-shadow: 0 0 10px rgba(5,150,105,0.5); }
+    .digit-input.pulse { animation: inputPulse 0.3s ease-out; }
+    @keyframes inputPulse { 0% { transform: scale(1.08); } 50% { transform: scale(1.03); } 100% { transform: scale(1.08); } }
+    .digit-input.shake { animation: shake 0.5s ease-out; border-color: #ef4444; box-shadow: 0 0 0 4px rgba(239,68,68,0.4), 0 0 30px rgba(239,68,68,0.3); }
+    @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
 
     /* Teacher Icon */
     .teacher-icon { position: fixed; bottom: 30px; left: 30px; width: 60px; height: 60px; background: linear-gradient(135deg, #059669 0%, #047857 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(5,150,105,0.4), 0 0 25px rgba(5,150,105,0.3); transition: all 0.3s ease-out; z-index: 100; border: 3px solid white; will-change: transform; }
@@ -92,9 +107,18 @@
     .fade-in { animation: fadeIn 0.5s ease-out; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ===== SCALE-IN MODAL ANIMATION ===== */
-    .modal-content { animation: scaleIn 0.3s ease-out; }
-    @keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    /* ===== MODAL STAGGERED POP-IN ===== */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.7); display: none; justify-content: center; align-items: center; z-index: 1000; transition: backdrop-filter 0.3s ease-out; }
+    .modal-overlay.active { display: flex; backdrop-filter: blur(0px); animation: modalBlurIn 0.3s ease-out forwards; }
+    @keyframes modalBlurIn { to { backdrop-filter: blur(8px); } }
+    .modal-content { animation: modalPopIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    @keyframes modalPopIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    /* Developer Card Staggered Animation */
+    .modal-overlay.active .developer-card:nth-child(1) { animation: devCardPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s forwards; opacity: 0; }
+    .modal-overlay.active .developer-card:nth-child(2) { animation: devCardPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards; opacity: 0; }
+    .modal-overlay.active .developer-card:nth-child(3) { animation: devCardPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards; opacity: 0; }
+    @keyframes devCardPop { from { transform: scale(0.8) translateY(20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
 
     /* Sidebar */
     .sidebar-link { transition: all 0.3s ease-out; }
@@ -112,10 +136,6 @@
     /* Dashboard Section */
     .dashboard-section { display: none; }
     .dashboard-section.active { display: block; animation: fadeIn 0.4s ease-out; }
-
-    /* Modal Overlay */
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.7); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1000; }
-    .modal-overlay.active { display: flex; }
 
     /* ===== ILLUMINATED DEVELOPER PROFILE CARDS ===== */
     .developer-card { position: relative; background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); border-radius: 20px; padding: 24px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.1); transition: all 0.3s ease-out; border: 2px solid transparent; will-change: transform; overflow: hidden; }
@@ -147,7 +167,7 @@
   <div id="homepage" class="min-h-screen flex flex-col">
     
     <!-- Header with Glassmorphism -->
-    <header class="glass-dark text-white py-4 px-6 shadow-lg sticky top-0 z-50">
+    <header class="header-reveal glass-dark text-white py-4 px-6 shadow-lg sticky top-0 z-50">
       <div class="max-w-6xl mx-auto flex items-center justify-between">
         <div class="flex items-center gap-4">
           <img src="logo.png" alt="Cabiao SHS Logo" class="w-12 h-12 rounded-xl shadow-lg object-contain bg-white p-1">
@@ -189,7 +209,7 @@
       </div>
 
       <!-- Main Card with Glassmorphism -->
-      <div class="glass rounded-3xl shadow-2xl p-8 w-full max-w-md relative z-10 fade-in">
+      <div class="card-reveal glass rounded-3xl shadow-2xl p-8 w-full max-w-md relative z-10">
         
         <!-- Logo & Title -->
         <div class="text-center mb-8">
@@ -240,7 +260,7 @@
       </div>
 
       <!-- Teacher Icon -->
-      <div class="teacher-icon" onclick="openTeacherDashboard()" title="Teacher/Staff Dashboard">
+      <div class="teacher-icon teacher-icon-reveal" onclick="openTeacherDashboard()" title="Teacher/Staff Dashboard">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
         </svg>
@@ -924,6 +944,10 @@
         input.addEventListener('input', (e) => {
           if (e.target.value) {
             e.target.classList.add('filled');
+            // Trigger pulse animation
+            e.target.classList.remove('pulse');
+            void e.target.offsetWidth; // Force reflow
+            e.target.classList.add('pulse');
             if (index < 5) inputs[index + 1].focus();
             if (index === 5 && e.target.value) accessReportCard();
           } else {
@@ -944,11 +968,28 @@
             if (inputs[i]) {
               inputs[i].value = d;
               inputs[i].classList.add('filled');
+              // Trigger pulse animation
+              inputs[i].classList.remove('pulse');
+              void inputs[i].offsetWidth;
+              inputs[i].classList.add('pulse');
             }
           });
           if (digits.length > 0) inputs[Math.min(digits.length, 5)].focus();
         });
       });
+    }
+
+    // Trigger shake animation on error
+    function triggerShake() {
+      const inputs = document.querySelectorAll('.digit-input');
+      inputs.forEach(input => {
+        input.classList.remove('shake');
+        void input.offsetWidth;
+        input.classList.add('shake');
+      });
+      setTimeout(() => {
+        inputs.forEach(input => input.classList.remove('shake'));
+      }, 500);
     }
 
     // ==================== COUNT-UP ANIMATION ====================
@@ -985,6 +1026,7 @@
       if (code.length !== 6) {
         errorEl.textContent = 'Please enter all 6 digits.';
         errorEl.classList.remove('hidden');
+        triggerShake();
         return;
       }
 
@@ -993,6 +1035,7 @@
       if (!codeData || new Date() > new Date(codeData.expiration)) {
         errorEl.textContent = 'Invalid or expired code.';
         errorEl.classList.remove('hidden');
+        triggerShake();
         clearCodeInputs();
         return;
       }
