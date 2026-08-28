@@ -160,13 +160,25 @@
     .badge-bloom { animation: badgePulse 2s ease-in-out infinite; }
     @keyframes badgePulse { 0%, 100% { box-shadow: 0 0 5px rgba(16,185,129,0.3); } 50% { box-shadow: 0 0 15px rgba(16,185,129,0.6), 0 0 25px rgba(16,185,129,0.3); } }
 
+    /* ===== SIGNATURE CANVAS ===== */
+    #parentSignatureCanvas, #adviserSignatureCanvas {
+      background: white;
+      touch-action: none;
+    }
+    #parentSignatureCanvas:focus, #adviserSignatureCanvas:focus {
+      outline: none;
+      border-color: #059669;
+      box-shadow: 0 0 0 4px rgba(5,150,105,0.3), 0 0 20px rgba(5,150,105,0.2);
+    }
+
     /* ===== PRINT STYLES ===== */
     @media print {
       body * { visibility: hidden !important; }
-      #printableReportCard, #printableReportCard * { visibility: visible !important; }
-      #printableReportCard { position: absolute; left: 0; top: 0; width: 100%; background: white !important; box-shadow: none !important; }
-      .no-print { display: none !important; }
-      header, nav, .teacher-icon, .modal-overlay, .btn-glow, .sidebar-link, .glass-dark { display: none !important; }
+      #reportCardContent, #reportCardContent * { visibility: visible !important; }
+      #reportCardContent { position: absolute; left: 0; top: 0; width: 100%; background: white !important; box-shadow: none !important; padding: 20px !important; }
+      .no-print, header, nav, .teacher-icon, .modal-overlay, .btn-glow, .sidebar-link, .glass-dark, #parentSignatureArea, #adviserSignatureArea, .glass { display: none !important; }
+      #parentSignatureStatus, #adviserSignatureStatus { display: block !important; }
+      #parentSignatureImage, #adviserSignatureImage { max-height: 50px !important; border: 1px solid #ccc; }
     }
   </style>
 </head>
@@ -930,8 +942,44 @@
         </table>
         <div class="mb-6">
           <p class="text-sm"><strong>Remarks:</strong> <span id="sf9Remarks" class="text-emerald-600 font-bold">-</span></p>
-          <p class="text-sm mt-2"><strong>Parent/Guardian Signature:</strong> _________________________</p>
-          <p class="text-sm mt-2"><strong>Adviser Signature:</strong> _________________________</p>
+        </div>
+
+        <!-- Parent/Guardian Digital Signature Section -->
+        <div class="mb-6 p-4 bg-gradient-to-br from-emerald-50 to-indigo-50 rounded-2xl border border-emerald-200/50">
+          <h4 class="text-sm font-bold text-navy-800 mb-3">Parent / Guardian Signature for Quarterly Acknowledgment</h4>
+          <div id="parentSignatureArea">
+            <canvas id="parentSignatureCanvas" class="w-full h-32 border-2 border-navy-300 rounded-xl bg-white cursor-crosshair touch-none"></canvas>
+            <div class="flex gap-3 mt-3">
+              <button onclick="clearParentSignature()" class="px-4 py-2 bg-slate-200 text-navy-700 rounded-xl text-sm font-semibold hover:bg-slate-300 transition-all duration-300">🗑️ Clear Canvas</button>
+              <button onclick="saveParentSignature()" class="btn-glow px-4 py-2 bg-gradient-to-r from-emerald-600 to-indigo-600 text-white rounded-xl text-sm font-bold">✍️ Save & Sign Report Card</button>
+            </div>
+          </div>
+          <div id="parentSignatureStatus" class="hidden mt-3 p-3 bg-emerald-100 rounded-xl">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center"><span class="text-white text-xs">✓</span></div>
+              <p class="text-sm font-semibold text-emerald-800">Signed on <span id="parentSignDate">-</span></p>
+            </div>
+            <img id="parentSignatureImage" src="" alt="Parent Signature" class="mt-2 h-16 object-contain">
+          </div>
+        </div>
+
+        <!-- Adviser Signature Section -->
+        <div class="mb-6 p-4 bg-gradient-to-br from-indigo-50 to-emerald-50 rounded-2xl border border-indigo-200/50">
+          <h4 class="text-sm font-bold text-navy-800 mb-3">Class Adviser Signature</h4>
+          <div id="adviserSignatureArea">
+            <canvas id="adviserSignatureCanvas" class="w-full h-32 border-2 border-navy-300 rounded-xl bg-white cursor-crosshair touch-none"></canvas>
+            <div class="flex gap-3 mt-3">
+              <button onclick="clearAdviserSignature()" class="px-4 py-2 bg-slate-200 text-navy-700 rounded-xl text-sm font-semibold hover:bg-slate-300 transition-all duration-300">🗑️ Clear Canvas</button>
+              <button onclick="saveAdviserSignature()" class="btn-glow px-4 py-2 bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-xl text-sm font-bold">✍️ Save Adviser Signature</button>
+            </div>
+          </div>
+          <div id="adviserSignatureStatus" class="hidden mt-3 p-3 bg-indigo-100 rounded-xl">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 bg-indigo-500 rounded-full flex items-center justify-center"><span class="text-white text-xs">✓</span></div>
+              <p class="text-sm font-semibold text-indigo-800">Signed on <span id="adviserSignDate">-</span></p>
+            </div>
+            <img id="adviserSignatureImage" src="" alt="Adviser Signature" class="mt-2 h-16 object-contain">
+          </div>
         </div>
         <div class="flex justify-between items-end border-t-2 border-emerald-200/50 pt-4">
           <div>
@@ -1201,6 +1249,13 @@
 
     let generatedCodes = [];
 
+    // ==================== SIGNATURE PAD STATE ====================
+    let parentSignaturePad = null;
+    let adviserSignaturePad = null;
+    let parentSignatureData = null;
+    let adviserSignatureData = null;
+    let currentStudentId = null;
+
     // ==================== INITIALIZATION ====================
     document.addEventListener('DOMContentLoaded', () => {
       loadFromStorage();
@@ -1208,6 +1263,7 @@
       setupDigitInputs();
       renderStudentsTable();
       updateStats();
+      initSignaturePads();
       
       // Animate stat counters on page load
       setTimeout(() => {
@@ -1216,6 +1272,179 @@
         animateCountUp(document.getElementById('pendingReviews'), 12, 800);
       }, 500);
     });
+
+    // ==================== SIGNATURE PAD INITIALIZATION ====================
+    function initSignaturePads() {
+      const parentCanvas = document.getElementById('parentSignatureCanvas');
+      const adviserCanvas = document.getElementById('adviserSignatureCanvas');
+      
+      if (parentCanvas) {
+        parentSignaturePad = setupCanvas(parentCanvas);
+      }
+      if (adviserCanvas) {
+        adviserSignaturePad = setupCanvas(adviserCanvas);
+      }
+    }
+
+    function setupCanvas(canvas) {
+      const ctx = canvas.getContext('2d');
+      let drawing = false;
+      let lastX = 0;
+      let lastY = 0;
+
+      // Set canvas size
+      function resizeCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+        ctx.strokeStyle = '#1e293b';
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      // Get position from event
+      function getPosition(e) {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return {
+          x: clientX - rect.left,
+          y: clientY - rect.top
+        };
+      }
+
+      // Drawing functions
+      function startDrawing(e) {
+        e.preventDefault();
+        drawing = true;
+        const pos = getPosition(e);
+        lastX = pos.x;
+        lastY = pos.y;
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+      }
+
+      function draw(e) {
+        if (!drawing) return;
+        e.preventDefault();
+        const pos = getPosition(e);
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        lastX = pos.x;
+        lastY = pos.y;
+      }
+
+      function stopDrawing() {
+        drawing = false;
+      }
+
+      // Mouse events
+      canvas.addEventListener('mousedown', startDrawing);
+      canvas.addEventListener('mousemove', draw);
+      canvas.addEventListener('mouseup', stopDrawing);
+      canvas.addEventListener('mouseout', stopDrawing);
+
+      // Touch events
+      canvas.addEventListener('touchstart', startDrawing, { passive: false });
+      canvas.addEventListener('touchmove', draw, { passive: false });
+      canvas.addEventListener('touchend', stopDrawing);
+
+      return { canvas, ctx, clear: () => { ctx.clearRect(0, 0, canvas.width, canvas.height); } };
+    }
+
+    // ==================== PARENT SIGNATURE ====================
+    function clearParentSignature() {
+      if (parentSignaturePad) parentSignaturePad.clear();
+    }
+
+    function saveParentSignature() {
+      if (!parentSignaturePad) return;
+      const dataURL = parentSignaturePad.canvas.toDataURL('image/png');
+      if (isCanvasEmpty(parentSignaturePad.canvas)) {
+        alert('Please draw your signature first');
+        return;
+      }
+      parentSignatureData = dataURL;
+      document.getElementById('parentSignatureImage').src = dataURL;
+      document.getElementById('parentSignDate').textContent = new Date().toLocaleString();
+      document.getElementById('parentSignatureArea').classList.add('hidden');
+      document.getElementById('parentSignatureStatus').classList.remove('hidden');
+      
+      // Save to localStorage
+      const studentId = currentStudentId;
+      const signatures = JSON.parse(localStorage.getItem('reportSignatures') || '{}');
+      signatures[`parent_${studentId}`] = { image: dataURL, date: new Date().toISOString() };
+      localStorage.setItem('reportSignatures', JSON.stringify(signatures));
+      addAuditLog('Parent signature saved for report card');
+    }
+
+    // ==================== ADVISER SIGNATURE ====================
+    function clearAdviserSignature() {
+      if (adviserSignaturePad) adviserSignaturePad.clear();
+    }
+
+    function saveAdviserSignature() {
+      if (!adviserSignaturePad) return;
+      const dataURL = adviserSignaturePad.canvas.toDataURL('image/png');
+      if (isCanvasEmpty(adviserSignaturePad.canvas)) {
+        alert('Please draw your signature first');
+        return;
+      }
+      adviserSignatureData = dataURL;
+      document.getElementById('adviserSignatureImage').src = dataURL;
+      document.getElementById('adviserSignDate').textContent = new Date().toLocaleString();
+      document.getElementById('adviserSignatureArea').classList.add('hidden');
+      document.getElementById('adviserSignatureStatus').classList.remove('hidden');
+      
+      // Save to localStorage
+      const signatures = JSON.parse(localStorage.getItem('reportSignatures') || '{}');
+      signatures['adviser'] = { image: dataURL, date: new Date().toISOString() };
+      localStorage.setItem('reportSignatures', JSON.stringify(signatures));
+      addAuditLog('Adviser signature saved for report card');
+    }
+
+    // ==================== UTILITY FUNCTIONS ====================
+    function isCanvasEmpty(canvas) {
+      const ctx = canvas.getContext('2d');
+      const pixelData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      for (let i = 3; i < pixelData.length; i += 4) {
+        if (pixelData[i] !== 0) return false;
+      }
+      return true;
+    }
+
+    function loadSignatures(studentId) {
+      const signatures = JSON.parse(localStorage.getItem('reportSignatures') || '{}');
+      const parentSig = signatures[`parent_${studentId}`];
+      const adviserSig = signatures['adviser'];
+      
+      if (parentSig) {
+        document.getElementById('parentSignatureImage').src = parentSig.image;
+        document.getElementById('parentSignDate').textContent = new Date(parentSig.date).toLocaleString();
+        document.getElementById('parentSignatureArea').classList.add('hidden');
+        document.getElementById('parentSignatureStatus').classList.remove('hidden');
+      } else {
+        document.getElementById('parentSignatureArea').classList.remove('hidden');
+        document.getElementById('parentSignatureStatus').classList.add('hidden');
+        if (parentSignaturePad) parentSignaturePad.clear();
+      }
+      
+      if (adviserSig) {
+        document.getElementById('adviserSignatureImage').src = adviserSig.image;
+        document.getElementById('adviserSignDate').textContent = new Date(adviserSig.date).toLocaleString();
+        document.getElementById('adviserSignatureArea').classList.add('hidden');
+        document.getElementById('adviserSignatureStatus').classList.remove('hidden');
+      } else {
+        document.getElementById('adviserSignatureArea').classList.remove('hidden');
+        document.getElementById('adviserSignatureStatus').classList.add('hidden');
+        if (adviserSignaturePad) adviserSignaturePad.clear();
+      }
+    }
 
     function loadFromStorage() {
       const saved = localStorage.getItem('generatedCodes');
@@ -1336,9 +1565,13 @@
 
     // ==================== REPORT CARD ====================
     function showReportCard(student) {
+      currentStudentId = student.id;
       document.getElementById('homepage').style.display = 'none';
       document.getElementById('teacherDashboard').classList.add('hidden');
       document.getElementById('reportCardView').style.display = 'block';
+
+      // Load signatures for this student
+      setTimeout(() => loadSignatures(student.id), 100);
 
       document.getElementById('sf9Name').textContent = `${student.lastName}, ${student.firstName}`;
       document.getElementById('sf9LRN').textContent = student.lrn;
