@@ -280,64 +280,72 @@
         <p class="text-center text-navy-400 text-xs mt-6 font-medium">Cabiao, Nueva Ecija • School Year 2025-2026</p>
       </div>
 
-      <!-- Staff Access Icon -->
-      <div class="teacher-icon teacher-icon-reveal" onclick="openRoleSelectionModal()" title="Staff Access Portal">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-        </svg>
+      <!-- Floating Access Button -->
+      <div class="fixed bottom-6 left-6 z-50 teacher-icon-reveal">
+        <button onclick="openRoleSelectionModal()" class="group flex items-center gap-3 px-5 py-3 bg-slate-900/80 backdrop-blur-md border border-slate-700/60 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] hover:scale-105 active:scale-95 transition-all duration-300">
+          <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-indigo-500 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-emerald-500/30 transition-all duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <span class="text-white text-sm font-semibold hidden sm:block group-hover:translate-x-1 transition-transform duration-300">Portal Access</span>
+        </button>
       </div>
     </main>
   </div>
 
   <!-- ROLE SELECTION MODAL -->
-  <div id="roleSelectionModal" class="modal-overlay">
-    <div class="modal-content bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl w-full max-w-lg mx-4 border border-slate-200/50 overflow-hidden">
+  <div id="roleSelectionModal" class="modal-overlay" onclick="handleRoleModalClick(event)">
+    <div class="modal-content bg-slate-900/95 backdrop-blur-xl rounded-3xl shadow-2xl w-full max-w-lg mx-4 border border-slate-700/60 overflow-hidden">
       
       <!-- Modal Header -->
-      <div class="bg-gradient-to-r from-navy-800 to-navy-900 text-white p-6 text-center">
-        <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-indigo-500 rounded-full mx-auto mb-4 flex items-center justify-center shadow-lg bloom-glow">
+      <div class="relative p-6 text-center border-b border-slate-700/60">
+        <button onclick="closeRoleSelectionModal()" class="absolute top-4 right-4 w-8 h-8 bg-slate-800 hover:bg-slate-700 rounded-full flex items-center justify-center text-slate-400 hover:text-white transition-all duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+        <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-indigo-500 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg shadow-emerald-500/30">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
           </svg>
         </div>
-        <h2 class="text-xl font-bold">Select Access Portal</h2>
-        <p class="text-emerald-300 text-sm">Choose your role to continue</p>
+        <h2 class="text-2xl font-bold text-white mb-1">Welcome Back</h2>
+        <p class="text-slate-400 text-sm">Choose your portal to sign in</p>
       </div>
 
       <!-- Modal Body -->
       <div class="p-6 space-y-4">
         
         <!-- Teacher Access Card -->
-        <div onclick="openTeacherDashboard()" class="group glass-card p-5 rounded-2xl cursor-pointer border-2 border-transparent hover:border-emerald-400 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all duration-300">
+        <div onclick="openTeacherDashboard()" class="group relative p-5 bg-slate-800/50 rounded-2xl cursor-pointer border-2 border-slate-700/60 hover:border-emerald-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:-translate-y-1 transition-all duration-300">
           <div class="flex items-center gap-4">
-            <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-emerald-500/30 transition-all duration-300">
+            <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-emerald-500/40 transition-all duration-300">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
             </div>
             <div class="flex-1">
-              <h3 class="text-lg font-bold text-navy-800 group-hover:text-emerald-600 transition-colors">Teacher Access</h3>
-              <p class="text-navy-500 text-sm">Class sections, grade encoding, and parent code generator</p>
+              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">Teacher Portal</h3>
+              <p class="text-slate-400 text-sm">Manage section grades, view master lists, and generate parent access codes</p>
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-navy-400 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </div>
         </div>
 
         <!-- Registrar Access Card -->
-        <div onclick="openRegistrarDashboard()" class="group glass-card p-5 rounded-2xl cursor-pointer border-2 border-transparent hover:border-indigo-400 hover:shadow-[0_0_30px_rgba(99,102,241,0.3)] transition-all duration-300">
+        <div onclick="openRegistrarDashboard()" class="group relative p-5 bg-slate-800/50 rounded-2xl cursor-pointer border-2 border-slate-700/60 hover:border-cyan-500 hover:shadow-[0_0_30px_rgba(2,132,199,0.3)] hover:-translate-y-1 transition-all duration-300">
           <div class="flex items-center gap-4">
-            <div class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-indigo-500/30 transition-all duration-300">
+            <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/40 transition-all duration-300">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
             <div class="flex-1">
-              <h3 class="text-lg font-bold text-navy-800 group-hover:text-indigo-600 transition-colors">Registrar Access</h3>
-              <p class="text-navy-500 text-sm">Full admin controls, master database, and report printing</p>
+              <h3 class="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors">Registrar Portal</h3>
+              <p class="text-slate-400 text-sm">Full administrative controls, student master database, and direct SF9 report card printing</p>
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-navy-400 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-500 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </div>
@@ -347,7 +355,7 @@
 
       <!-- Modal Footer -->
       <div class="px-6 pb-6">
-        <button onclick="closeRoleSelectionModal()" class="w-full px-4 py-3 bg-slate-100 text-navy-600 rounded-xl font-semibold hover:bg-slate-200 transition-all duration-300">Cancel</button>
+        <button onclick="closeRoleSelectionModal()" class="w-full px-4 py-3 bg-slate-800 text-slate-400 rounded-xl font-semibold hover:bg-slate-700 hover:text-white transition-all duration-300">Cancel</button>
       </div>
     </div>
   </div>
@@ -1643,6 +1651,19 @@
       document.getElementById('roleSelectionModal').classList.remove('active');
     }
 
+    function handleRoleModalClick(e) {
+      if (e.target.id === 'roleSelectionModal') closeRoleSelectionModal();
+    }
+
+    // ESC key handler for all modals
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeRoleSelectionModal();
+        closeAboutModal();
+        closeDevelopersModal();
+      }
+    });
+
     // ==================== ABOUT MODAL ====================
     function openAboutModal() {
       document.getElementById('aboutModal').classList.add('active');
@@ -1935,10 +1956,6 @@
 
     document.getElementById('aboutModal').addEventListener('click', (e) => {
       if (e.target.id === 'aboutModal') closeAboutModal();
-    });
-
-    document.getElementById('roleSelectionModal').addEventListener('click', (e) => {
-      if (e.target.id === 'roleSelectionModal') closeRoleSelectionModal();
     });
   </script>
 
