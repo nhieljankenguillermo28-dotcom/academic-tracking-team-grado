@@ -204,6 +204,46 @@
       #parentSignatureImage, #adviserSignatureImage { max-height: 50px !important; border: 1px solid #ccc; }
     }
 
+    /* ===== DASHBOARD AMBIENT ORBS ===== */
+    .dash-orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.15; animation: dashOrbFloat 20s ease-in-out infinite; pointer-events: none; will-change: transform; }
+    @keyframes dashOrbFloat { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(30px, -40px) scale(1.1); } 66% { transform: translate(-20px, 30px) scale(0.95); } }
+    .dash-orb-1 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(5,150,105,0.4) 0%, transparent 70%); top: 10%; right: 10%; animation-delay: 0s; }
+    .dash-orb-2 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(79,70,229,0.35) 0%, transparent 70%); bottom: 20%; left: 5%; animation-delay: 7s; }
+    .dash-orb-3 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(6,182,212,0.3) 0%, transparent 70%); top: 50%; left: 40%; animation-delay: 14s; }
+
+    /* ===== STAT CARD GLOW BORDER ===== */
+    .stat-card-glow { position: relative; }
+    .stat-card-glow::before { content: ''; position: absolute; inset: -1px; border-radius: 20px; background: linear-gradient(135deg, rgba(16,185,129,0.3), rgba(99,102,241,0.3), rgba(6,182,212,0.3)); opacity: 0; transition: opacity 0.4s ease-out; z-index: -1; }
+    .stat-card-glow:hover::before { opacity: 1; }
+
+    /* ===== STATUS BADGE PULSE ===== */
+    .badge-cleared { background: linear-gradient(135deg, #059669, #047857); color: white; box-shadow: 0 0 15px rgba(5,150,105,0.4); animation: badgeGlow 2s ease-in-out infinite; }
+    .badge-pending { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; box-shadow: 0 0 15px rgba(245,158,11,0.4); animation: badgeGlow 2s ease-in-out infinite; }
+    .badge-honors { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: white; box-shadow: 0 0 15px rgba(139,92,246,0.4); animation: badgeGlow 2s ease-in-out infinite; }
+    @keyframes badgeGlow { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.15); box-shadow: 0 0 25px rgba(16,185,129,0.5); } }
+
+    /* ===== TABLE ROW GLOW ===== */
+    .table-row-glow { transition: all 0.3s ease-out; }
+    .table-row-glow:hover { background: linear-gradient(90deg, rgba(16,185,129,0.05) 0%, rgba(99,102,241,0.05) 50%, rgba(6,182,212,0.05) 100%); box-shadow: inset 0 0 30px rgba(16,185,129,0.03); }
+
+    /* ===== SIGNATURE CANVAS ILLUMINATION ===== */
+    .canvas-drawing { border-color: #059669 !important; box-shadow: 0 0 0 4px rgba(5,150,105,0.2), 0 0 30px rgba(5,150,105,0.3), 0 0 60px rgba(5,150,105,0.1) !important; animation: canvasPulse 1.5s ease-in-out infinite; }
+    @keyframes canvasPulse { 0%, 100% { box-shadow: 0 0 0 4px rgba(5,150,105,0.2), 0 0 30px rgba(5,150,105,0.3); } 50% { box-shadow: 0 0 0 6px rgba(5,150,105,0.3), 0 0 40px rgba(5,150,105,0.4), 0 0 70px rgba(5,150,105,0.15); } }
+
+    /* ===== PRINT LOADING ===== */
+    .print-loading { position: relative; overflow: hidden; }
+    .print-loading::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: printShimmer 1.5s ease-in-out infinite; }
+    @keyframes printShimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+    /* ===== DASHBOARD NAVBAR GLOW LINE ===== */
+    .dash-nav-glow { position: relative; }
+    .dash-nav-glow::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #059669, #06b6d4, #4f46e5, transparent); opacity: 0.5; }
+
+    /* ===== COUNTER NUMBER ANIMATION ===== */
+    .counter-animate { display: inline-block; transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .counter-animate.counting { animation: countPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    @keyframes countPop { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
     /* ===== REDUCED MOTION ===== */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
@@ -392,10 +432,15 @@
   </div>
 
   <!-- TEACHER FULL DASHBOARD -->
-  <div id="teacherDashboard" class="hidden min-h-screen flex flex-col bg-navy-50">
+  <div id="teacherDashboard" class="hidden min-h-screen flex flex-col bg-navy-50 relative overflow-hidden">
+    
+    <!-- Dashboard Ambient Orbs -->
+    <div class="dash-orb dash-orb-1"></div>
+    <div class="dash-orb dash-orb-2"></div>
+    <div class="dash-orb dash-orb-3"></div>
     
     <!-- Top Navbar with Navigation -->
-    <header class="glass-dark text-white shadow-lg sticky top-0 z-50">
+    <header class="glass-dark text-white shadow-lg sticky top-0 z-50 dash-nav-glow">
       <div class="max-w-full mx-auto px-6 py-4 flex items-center justify-between">
         
         <!-- Left: Logo & Title -->
@@ -478,38 +523,38 @@
     <main class="flex-1 flex flex-col overflow-hidden">
 
       <!-- OVERVIEW SECTION -->
-      <div id="dash-overview" class="dashboard-section active p-6 space-y-6 overflow-y-auto">
+      <div id="dash-overview" class="dashboard-section active p-6 space-y-6 overflow-y-auto relative z-10">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div class="stat-card bg-white/80 backdrop-blur-sm p-5 rounded-2xl shadow-sm border border-slate-200/50">
+          <div class="stat-card stat-card-glow bg-white/80 backdrop-blur-sm p-5 rounded-2xl shadow-sm border border-slate-200/50">
             <div class="flex items-center justify-between mb-3">
               <p class="text-sm text-navy-500 font-medium">Total Students</p>
-              <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center"><span class="text-lg">👨‍🎓</span></div>
+              <div class="w-10 h-10 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20"><span class="text-lg">👨‍🎓</span></div>
             </div>
-            <p class="text-3xl font-extrabold text-navy-800"><span id="totalStudents">0</span></p>
+            <p class="text-3xl font-extrabold text-navy-800"><span id="totalStudents" class="counter-animate">0</span></p>
             <div class="flex items-center gap-1 mt-2"><div class="ping-dot"></div><span class="text-xs text-emerald-600 font-medium">Active</span></div>
           </div>
-          <div class="stat-card bg-white/80 backdrop-blur-sm p-5 rounded-2xl shadow-sm border border-slate-200/50">
+          <div class="stat-card stat-card-glow bg-white/80 backdrop-blur-sm p-5 rounded-2xl shadow-sm border border-slate-200/50">
             <div class="flex items-center justify-between mb-3">
               <p class="text-sm text-navy-500 font-medium">Active Codes</p>
-              <div class="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center"><span class="text-lg">🔑</span></div>
+              <div class="w-10 h-10 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20"><span class="text-lg">🔑</span></div>
             </div>
-            <p class="text-3xl font-extrabold text-emerald-600" id="overviewActiveCodes">0</p>
+            <p class="text-3xl font-extrabold text-emerald-600"><span id="overviewActiveCodes" class="counter-animate">0</span></p>
             <p class="text-xs text-navy-400 mt-2">Generated today</p>
           </div>
-          <div class="stat-card bg-white/80 backdrop-blur-sm p-5 rounded-2xl shadow-sm border border-slate-200/50">
+          <div class="stat-card stat-card-glow bg-white/80 backdrop-blur-sm p-5 rounded-2xl shadow-sm border border-slate-200/50">
             <div class="flex items-center justify-between mb-3">
               <p class="text-sm text-navy-500 font-medium">Grades Entered</p>
-              <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center"><span class="text-lg">📝</span></div>
+              <div class="w-10 h-10 bg-gradient-to-br from-emerald-400 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/20"><span class="text-lg">📝</span></div>
             </div>
-            <p class="text-3xl font-extrabold text-navy-800"><span id="gradesEntered">0</span></p>
+            <p class="text-3xl font-extrabold text-navy-800"><span id="gradesEntered" class="counter-animate">0</span></p>
             <p class="text-xs text-navy-400 mt-2">This quarter</p>
           </div>
-          <div class="stat-card bg-white/80 backdrop-blur-sm p-5 rounded-2xl shadow-sm border border-slate-200/50">
+          <div class="stat-card stat-card-glow bg-white/80 backdrop-blur-sm p-5 rounded-2xl shadow-sm border border-slate-200/50">
             <div class="flex items-center justify-between mb-3">
               <p class="text-sm text-navy-500 font-medium">Pending Reviews</p>
-              <div class="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center"><span class="text-lg">⏳</span></div>
+              <div class="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20"><span class="text-lg">⏳</span></div>
             </div>
-            <p class="text-3xl font-extrabold text-orange-500"><span id="pendingReviews">0</span></p>
+            <p class="text-3xl font-extrabold text-orange-500"><span id="pendingReviews" class="counter-animate">0</span></p>
             <p class="text-xs text-navy-400 mt-2">Needs attention</p>
           </div>
         </div>
@@ -706,10 +751,15 @@
   </div>
 
   <!-- REGISTRAR FULL DASHBOARD -->
-  <div id="registrarDashboard" class="hidden min-h-screen flex flex-col bg-navy-50">
+  <div id="registrarDashboard" class="hidden min-h-screen flex flex-col bg-navy-50 relative overflow-hidden">
+    
+    <!-- Dashboard Ambient Orbs -->
+    <div class="dash-orb dash-orb-1"></div>
+    <div class="dash-orb dash-orb-2"></div>
+    <div class="dash-orb dash-orb-3"></div>
     
     <!-- Top Navbar -->
-    <header class="glass-dark text-white shadow-lg sticky top-0 z-50">
+    <header class="glass-dark text-white shadow-lg sticky top-0 z-50 dash-nav-glow">
       <div class="max-w-full mx-auto px-6 py-4 flex items-center justify-between">
         <div class="flex items-center gap-4">
           <img src="logo.png" alt="Cabiao SHS Logo" class="w-10 h-10 rounded-lg object-contain bg-white p-1">
@@ -1425,11 +1475,33 @@
         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
         return { x: clientX - rect.left, y: clientY - rect.top };
       }
-      function startDrawing(e) { e.preventDefault(); drawing = true; hasDrawn = true; const pos = getPosition(e); lastX = pos.x; lastY = pos.y; ctx.beginPath(); ctx.moveTo(lastX, lastY); showAutoSaveIndicator(type, 'saving'); }
-      function draw(e) { if (!drawing) return; e.preventDefault(); const pos = getPosition(e); ctx.beginPath(); ctx.moveTo(lastX, lastY); ctx.lineTo(pos.x, pos.y); ctx.stroke(); lastX = pos.x; lastY = pos.y; }
+      function startDrawing(e) {
+        e.preventDefault();
+        drawing = true;
+        hasDrawn = true;
+        canvas.classList.add('canvas-drawing');
+        const pos = getPosition(e);
+        lastX = pos.x;
+        lastY = pos.y;
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        showAutoSaveIndicator(type, 'saving');
+      }
+      function draw(e) {
+        if (!drawing) return;
+        e.preventDefault();
+        const pos = getPosition(e);
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        lastX = pos.x;
+        lastY = pos.y;
+      }
       function stopDrawing() {
         if (!drawing) return;
         drawing = false;
+        canvas.classList.remove('canvas-drawing');
         if (hasDrawn) {
           autoSaveSignature(type);
         }
@@ -1441,7 +1513,7 @@
       canvas.addEventListener('touchstart', startDrawing, { passive: false });
       canvas.addEventListener('touchmove', draw, { passive: false });
       canvas.addEventListener('touchend', stopDrawing);
-      return { canvas, ctx, clear: () => { ctx.clearRect(0, 0, canvas.width, canvas.height); hasDrawn = false; }, hasDrawn: () => hasDrawn };
+      return { canvas, ctx, clear: () => { ctx.clearRect(0, 0, canvas.width, canvas.height); hasDrawn = false; canvas.classList.remove('canvas-drawing'); }, hasDrawn: () => hasDrawn };
     }
 
     function showAutoSaveIndicator(type, state) {
@@ -1609,13 +1681,22 @@
     }
 
     // ==================== COUNT-UP ANIMATION ====================
-    function animateCountUp(element, target, duration = 1000) {
+    function animateCountUp(element, target, duration = 1500) {
+      if (!element) return;
+      element.classList.add('counting');
       let current = 0;
       const increment = target / (duration / 16);
       const timer = setInterval(() => {
         current += increment;
-        if (current >= target) { element.textContent = target.toLocaleString(); clearInterval(timer); }
-        else { element.textContent = Math.floor(current).toLocaleString(); }
+        if (current >= target) {
+          element.textContent = target.toLocaleString();
+          element.classList.remove('counting');
+          element.classList.add('counting');
+          setTimeout(() => element.classList.remove('counting'), 300);
+          clearInterval(timer);
+        } else {
+          element.textContent = Math.floor(current).toLocaleString();
+        }
       }, 16);
     }
 
@@ -1987,6 +2068,8 @@
     function batchPrintReportCards() {
       const selected = Array.from(document.querySelectorAll('.student-checkbox:checked')).map(cb => parseInt(cb.dataset.id));
       if (selected.length === 0) { showToast('Error', 'Select at least one student', 'error'); return; }
+      const btn = event.target.closest('button');
+      setButtonLoading(btn, true);
       let printContent = '';
       selected.forEach((id, index) => {
         const student = students.find(s => s.id === id);
@@ -1995,11 +2078,14 @@
           if (index < selected.length - 1) printContent += '<div style="page-break-after: always;"></div>';
         }
       });
-      const printWindow = window.open('', '_blank');
-      printWindow.document.write(`<!DOCTYPE html><html><head><title>Report Cards</title><style>@page{size:A4 portrait;margin:15mm;}body{font-family:'Segoe UI',Arial,sans-serif;margin:0;padding:20px;color:#000;}h1,h2,h3{text-align:center;}.report-card{border:2px solid #000;padding:20px;margin-bottom:20px;}.header{text-align:center;border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:15px;}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:15px;}.info-grid p{margin:5px 0;font-size:14px;}table{width:100%;border-collapse:collapse;margin-bottom:15px;}th,td{border:1px solid #000;padding:8px;text-align:center;font-size:13px;}th{background:#f0f0f0;font-weight:bold;}.footer{margin-top:20px;font-size:13px;}.sig-line{margin-top:30px;border-top:1px solid #000;width:200px;display:inline-block;}</style></head><body>${printContent}</body></html>`);
-      printWindow.document.close();
-      setTimeout(() => { printWindow.print(); showToast('Print Ready', `${selected.length} report card(s) sent to printer`); }, 500);
-      addAuditLog(`Batch printed ${selected.length} report cards`);
+      setTimeout(() => {
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`<!DOCTYPE html><html><head><title>Report Cards</title><style>@page{size:A4 portrait;margin:15mm;}body{font-family:'Segoe UI',Arial,sans-serif;margin:0;padding:20px;color:#000;}h1,h2,h3{text-align:center;}.report-card{border:2px solid #000;padding:20px;margin-bottom:20px;}.header{text-align:center;border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:15px;}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:15px;}.info-grid p{margin:5px 0;font-size:14px;}table{width:100%;border-collapse:collapse;margin-bottom:15px;}th,td{border:1px solid #000;padding:8px;text-align:center;font-size:13px;}th{background:#f0f0f0;font-weight:bold;}.footer{margin-top:20px;font-size:13px;}.sig-line{margin-top:30px;border-top:1px solid #000;width:200px;display:inline-block;}</style></head><body>${printContent}</body></html>`);
+        printWindow.document.close();
+        setButtonLoading(btn, false);
+        setTimeout(() => { printWindow.print(); showToast('Print Ready', `${selected.length} report card(s) sent to printer`); }, 300);
+        addAuditLog(`Batch printed ${selected.length} report cards`);
+      }, 800);
     }
 
     function generateReportCardHTML(student) {
