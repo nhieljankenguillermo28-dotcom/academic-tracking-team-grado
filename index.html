@@ -295,8 +295,12 @@
   </div>
 
   <!-- ROLE SELECTION MODAL -->
-  <div id="roleSelectionModal" class="modal-overlay" onclick="handleRoleModalClick(event)">
-    <div class="modal-content bg-slate-900/95 backdrop-blur-xl rounded-3xl shadow-2xl w-full max-w-lg mx-4 border border-slate-700/60 overflow-hidden">
+  <div id="roleSelectionModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-150 ease-out" onclick="handleRoleModalClick(event)">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-xl transition-all duration-150"></div>
+    
+    <!-- Modal Content -->
+    <div id="roleModalContent" class="relative bg-slate-900/95 backdrop-blur-xl rounded-3xl shadow-2xl w-full max-w-lg mx-4 border border-slate-700/60 overflow-hidden transform scale-95 transition-all duration-150 ease-out">
       
       <!-- Modal Header -->
       <div class="relative p-6 text-center border-b border-slate-700/60">
@@ -316,9 +320,9 @@
       <div class="p-6 space-y-4">
         
         <!-- Teacher Access Card -->
-        <div onclick="openTeacherDashboard()" class="group relative p-5 bg-slate-800/50 rounded-2xl cursor-pointer border-2 border-slate-700/60 hover:border-emerald-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:-translate-y-1 transition-all duration-300">
+        <button onclick="selectTeacherPortal()" class="w-full group relative p-5 bg-slate-800/50 rounded-2xl cursor-pointer border-2 border-slate-700/60 hover:border-emerald-500 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:-translate-y-1 active:scale-[0.98] transition-all duration-150 text-left">
           <div class="flex items-center gap-4">
-            <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-emerald-500/40 transition-all duration-300">
+            <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-emerald-500/40 transition-all duration-150">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
@@ -331,12 +335,12 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </div>
-        </div>
+        </button>
 
         <!-- Registrar Access Card -->
-        <div onclick="openRegistrarDashboard()" class="group relative p-5 bg-slate-800/50 rounded-2xl cursor-pointer border-2 border-slate-700/60 hover:border-cyan-500 hover:shadow-[0_0_30px_rgba(2,132,199,0.3)] hover:-translate-y-1 transition-all duration-300">
+        <button onclick="selectRegistrarPortal()" class="w-full group relative p-5 bg-slate-800/50 rounded-2xl cursor-pointer border-2 border-slate-700/60 hover:border-cyan-500 hover:shadow-[0_0_30px_rgba(2,132,199,0.3)] hover:-translate-y-1 active:scale-[0.98] transition-all duration-150 text-left">
           <div class="flex items-center gap-4">
-            <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/40 transition-all duration-300">
+            <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-cyan-500/40 transition-all duration-150">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
@@ -349,13 +353,13 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </div>
-        </div>
+        </button>
 
       </div>
 
       <!-- Modal Footer -->
       <div class="px-6 pb-6">
-        <button onclick="closeRoleSelectionModal()" class="w-full px-4 py-3 bg-slate-800 text-slate-400 rounded-xl font-semibold hover:bg-slate-700 hover:text-white transition-all duration-300">Cancel</button>
+        <button onclick="closeRoleSelectionModal()" class="w-full px-4 py-3 bg-slate-800 text-slate-400 rounded-xl font-semibold hover:bg-slate-700 hover:text-white transition-all duration-150">Cancel</button>
       </div>
     </div>
   </div>
@@ -1643,22 +1647,48 @@
     }
 
     // ==================== ROLE SELECTION MODAL ====================
+    let isRoleModalOpen = false;
+
     function openRoleSelectionModal() {
-      document.getElementById('roleSelectionModal').classList.add('active');
+      const modal = document.getElementById('roleSelectionModal');
+      const content = document.getElementById('roleModalContent');
+      isRoleModalOpen = true;
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modal.classList.add('opacity-100', 'pointer-events-auto');
+      content.classList.remove('scale-95');
+      content.classList.add('scale-100');
+      document.body.style.overflow = 'hidden';
     }
 
     function closeRoleSelectionModal() {
-      document.getElementById('roleSelectionModal').classList.remove('active');
+      const modal = document.getElementById('roleSelectionModal');
+      const content = document.getElementById('roleModalContent');
+      isRoleModalOpen = false;
+      modal.classList.remove('opacity-100', 'pointer-events-auto');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      content.classList.remove('scale-100');
+      content.classList.add('scale-95');
+      document.body.style.overflow = '';
     }
 
     function handleRoleModalClick(e) {
       if (e.target.id === 'roleSelectionModal') closeRoleSelectionModal();
     }
 
+    function selectTeacherPortal() {
+      closeRoleSelectionModal();
+      setTimeout(() => openTeacherDashboard(), 150);
+    }
+
+    function selectRegistrarPortal() {
+      closeRoleSelectionModal();
+      setTimeout(() => openRegistrarDashboard(), 150);
+    }
+
     // ESC key handler for all modals
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        closeRoleSelectionModal();
+        if (isRoleModalOpen) closeRoleSelectionModal();
         closeAboutModal();
         closeDevelopersModal();
       }
