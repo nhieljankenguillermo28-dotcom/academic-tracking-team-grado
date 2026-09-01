@@ -954,18 +954,32 @@
 
         <!-- Parent/Guardian Digital Signature Section -->
         <div class="mb-6 p-4 bg-gradient-to-br from-emerald-50 to-indigo-50 rounded-2xl border border-emerald-200/50">
-          <h4 class="text-sm font-bold text-navy-800 mb-3">Parent / Guardian Signature for Quarterly Acknowledgment</h4>
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-sm font-bold text-navy-800">Parent / Guardian Signature</h4>
+            <div id="parentAutoSaveIndicator" class="hidden items-center gap-2 text-xs text-emerald-600 font-medium">
+              <div class="w-4 h-4 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+              <span>Saving...</span>
+            </div>
+            <div id="parentSavedIndicator" class="hidden items-center gap-2 text-xs text-emerald-600 font-medium">
+              <div class="w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center"><span class="text-white text-[8px]">✓</span></div>
+              <span>Auto-saved</span>
+            </div>
+          </div>
           <div id="parentSignatureArea">
             <canvas id="parentSignatureCanvas" class="w-full h-32 border-2 border-navy-300 rounded-xl bg-white cursor-crosshair touch-none"></canvas>
+            <p class="text-xs text-navy-400 mt-2 text-center">Draw your signature above — it will auto-save when you lift your pen</p>
             <div class="flex gap-3 mt-3">
-              <button onclick="clearParentSignature()" class="px-4 py-2 bg-slate-200 text-navy-700 rounded-xl text-sm font-semibold hover:bg-slate-300 transition-all duration-300">🗑️ Clear Canvas</button>
-              <button onclick="saveParentSignature()" class="btn-glow px-4 py-2 bg-gradient-to-r from-emerald-600 to-indigo-600 text-white rounded-xl text-sm font-bold">✍️ Save & Sign Report Card</button>
+              <button onclick="clearParentSignature()" class="px-4 py-2 bg-slate-200 text-navy-700 rounded-xl text-sm font-semibold hover:bg-slate-300 transition-all duration-300 active:scale-95">🗑️ Clear</button>
+              <button onclick="saveParentSignature()" class="btn-glow px-4 py-2 bg-gradient-to-r from-emerald-600 to-indigo-600 text-white rounded-xl text-sm font-bold active:scale-95">✍️ Save Now</button>
             </div>
           </div>
           <div id="parentSignatureStatus" class="hidden mt-3 p-3 bg-emerald-100 rounded-xl">
-            <div class="flex items-center gap-2">
-              <div class="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center"><span class="text-white text-xs">✓</span></div>
-              <p class="text-sm font-semibold text-emerald-800">Signed on <span id="parentSignDate">-</span></p>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center"><span class="text-white text-xs">✓</span></div>
+                <p class="text-sm font-semibold text-emerald-800">Signed on <span id="parentSignDate">-</span></p>
+              </div>
+              <button onclick="resetParentSignature()" class="text-xs text-red-500 hover:text-red-700 font-medium underline">Resign</button>
             </div>
             <img id="parentSignatureImage" src="" alt="Parent Signature" class="mt-2 h-16 object-contain">
           </div>
@@ -973,18 +987,32 @@
 
         <!-- Adviser Signature Section -->
         <div class="mb-6 p-4 bg-gradient-to-br from-indigo-50 to-emerald-50 rounded-2xl border border-indigo-200/50">
-          <h4 class="text-sm font-bold text-navy-800 mb-3">Class Adviser Signature</h4>
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-sm font-bold text-navy-800">Class Adviser Signature</h4>
+            <div id="adviserAutoSaveIndicator" class="hidden items-center gap-2 text-xs text-indigo-600 font-medium">
+              <div class="w-4 h-4 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+              <span>Saving...</span>
+            </div>
+            <div id="adviserSavedIndicator" class="hidden items-center gap-2 text-xs text-indigo-600 font-medium">
+              <div class="w-4 h-4 bg-indigo-500 rounded-full flex items-center justify-center"><span class="text-white text-[8px]">✓</span></div>
+              <span>Auto-saved</span>
+            </div>
+          </div>
           <div id="adviserSignatureArea">
             <canvas id="adviserSignatureCanvas" class="w-full h-32 border-2 border-navy-300 rounded-xl bg-white cursor-crosshair touch-none"></canvas>
+            <p class="text-xs text-navy-400 mt-2 text-center">Draw your signature above — it will auto-save when you lift your pen</p>
             <div class="flex gap-3 mt-3">
-              <button onclick="clearAdviserSignature()" class="px-4 py-2 bg-slate-200 text-navy-700 rounded-xl text-sm font-semibold hover:bg-slate-300 transition-all duration-300">🗑️ Clear Canvas</button>
-              <button onclick="saveAdviserSignature()" class="btn-glow px-4 py-2 bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-xl text-sm font-bold">✍️ Save Adviser Signature</button>
+              <button onclick="clearAdviserSignature()" class="px-4 py-2 bg-slate-200 text-navy-700 rounded-xl text-sm font-semibold hover:bg-slate-300 transition-all duration-300 active:scale-95">🗑️ Clear</button>
+              <button onclick="saveAdviserSignature()" class="btn-glow px-4 py-2 bg-gradient-to-r from-indigo-600 to-emerald-600 text-white rounded-xl text-sm font-bold active:scale-95">✍️ Save Now</button>
             </div>
           </div>
           <div id="adviserSignatureStatus" class="hidden mt-3 p-3 bg-indigo-100 rounded-xl">
-            <div class="flex items-center gap-2">
-              <div class="w-6 h-6 bg-indigo-500 rounded-full flex items-center justify-center"><span class="text-white text-xs">✓</span></div>
-              <p class="text-sm font-semibold text-indigo-800">Signed on <span id="adviserSignDate">-</span></p>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 bg-indigo-500 rounded-full flex items-center justify-center"><span class="text-white text-xs">✓</span></div>
+                <p class="text-sm font-semibold text-indigo-800">Signed on <span id="adviserSignDate">-</span></p>
+              </div>
+              <button onclick="resetAdviserSignature()" class="text-xs text-red-500 hover:text-red-700 font-medium underline">Resign</button>
             </div>
             <img id="adviserSignatureImage" src="" alt="Adviser Signature" class="mt-2 h-16 object-contain">
           </div>
@@ -1336,16 +1364,19 @@
     });
 
     // ==================== SIGNATURE PAD INITIALIZATION ====================
+    let parentAutoSaveTimer = null;
+    let adviserAutoSaveTimer = null;
+
     function initSignaturePads() {
       const parentCanvas = document.getElementById('parentSignatureCanvas');
       const adviserCanvas = document.getElementById('adviserSignatureCanvas');
-      if (parentCanvas) parentSignaturePad = setupCanvas(parentCanvas);
-      if (adviserCanvas) adviserSignaturePad = setupCanvas(adviserCanvas);
+      if (parentCanvas) parentSignaturePad = setupCanvas(parentCanvas, 'parent');
+      if (adviserCanvas) adviserSignaturePad = setupCanvas(adviserCanvas, 'adviser');
     }
 
-    function setupCanvas(canvas) {
+    function setupCanvas(canvas, type) {
       const ctx = canvas.getContext('2d');
-      let drawing = false, lastX = 0, lastY = 0;
+      let drawing = false, lastX = 0, lastY = 0, hasDrawn = false;
       function resizeCanvas() {
         const rect = canvas.getBoundingClientRect();
         canvas.width = rect.width;
@@ -1363,9 +1394,15 @@
         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
         return { x: clientX - rect.left, y: clientY - rect.top };
       }
-      function startDrawing(e) { e.preventDefault(); drawing = true; const pos = getPosition(e); lastX = pos.x; lastY = pos.y; ctx.beginPath(); ctx.moveTo(lastX, lastY); }
+      function startDrawing(e) { e.preventDefault(); drawing = true; hasDrawn = true; const pos = getPosition(e); lastX = pos.x; lastY = pos.y; ctx.beginPath(); ctx.moveTo(lastX, lastY); showAutoSaveIndicator(type, 'saving'); }
       function draw(e) { if (!drawing) return; e.preventDefault(); const pos = getPosition(e); ctx.beginPath(); ctx.moveTo(lastX, lastY); ctx.lineTo(pos.x, pos.y); ctx.stroke(); lastX = pos.x; lastY = pos.y; }
-      function stopDrawing() { drawing = false; }
+      function stopDrawing() {
+        if (!drawing) return;
+        drawing = false;
+        if (hasDrawn) {
+          autoSaveSignature(type);
+        }
+      }
       canvas.addEventListener('mousedown', startDrawing);
       canvas.addEventListener('mousemove', draw);
       canvas.addEventListener('mouseup', stopDrawing);
@@ -1373,45 +1410,90 @@
       canvas.addEventListener('touchstart', startDrawing, { passive: false });
       canvas.addEventListener('touchmove', draw, { passive: false });
       canvas.addEventListener('touchend', stopDrawing);
-      return { canvas, ctx, clear: () => { ctx.clearRect(0, 0, canvas.width, canvas.height); } };
+      return { canvas, ctx, clear: () => { ctx.clearRect(0, 0, canvas.width, canvas.height); hasDrawn = false; }, hasDrawn: () => hasDrawn };
+    }
+
+    function showAutoSaveIndicator(type, state) {
+      const saving = document.getElementById(`${type}AutoSaveIndicator`);
+      const saved = document.getElementById(`${type}SavedIndicator`);
+      if (state === 'saving') {
+        saving.classList.remove('hidden');
+        saving.classList.add('flex');
+        saved.classList.add('hidden');
+        saved.classList.remove('flex');
+      } else if (state === 'saved') {
+        saving.classList.add('hidden');
+        saving.classList.remove('flex');
+        saved.classList.remove('hidden');
+        saved.classList.add('flex');
+        setTimeout(() => { saved.classList.add('hidden'); saved.classList.remove('flex'); }, 2000);
+      }
+    }
+
+    function autoSaveSignature(type) {
+      const pad = type === 'parent' ? parentSignaturePad : adviserSignaturePad;
+      if (!pad) return;
+      if (isCanvasEmpty(pad.canvas)) {
+        showAutoSaveIndicator(type, 'saved');
+        return;
+      }
+      const dataURL = pad.canvas.toDataURL('image/png');
+      const signatures = JSON.parse(localStorage.getItem('reportSignatures') || '{}');
+      const key = type === 'parent' ? `parent_${currentStudentId}` : 'adviser';
+      signatures[key] = { image: dataURL, date: new Date().toISOString() };
+      localStorage.setItem('reportSignatures', JSON.stringify(signatures));
+      showAutoSaveIndicator(type, 'saved');
+      addAuditLog(`${type === 'parent' ? 'Parent' : 'Adviser'} signature auto-saved`);
     }
 
     // ==================== PARENT SIGNATURE ====================
-    function clearParentSignature() { if (parentSignaturePad) parentSignaturePad.clear(); }
+    function clearParentSignature() {
+      if (parentSignaturePad) {
+        parentSignaturePad.clear();
+        showAutoSaveIndicator('parent', 'saved');
+      }
+    }
 
     function saveParentSignature() {
       if (!parentSignaturePad) return;
-      const dataURL = parentSignaturePad.canvas.toDataURL('image/png');
       if (isCanvasEmpty(parentSignaturePad.canvas)) { showToast('Error', 'Please draw your signature first', 'error'); return; }
-      parentSignatureData = dataURL;
-      document.getElementById('parentSignatureImage').src = dataURL;
-      document.getElementById('parentSignDate').textContent = new Date().toLocaleString();
-      document.getElementById('parentSignatureArea').classList.add('hidden');
-      document.getElementById('parentSignatureStatus').classList.remove('hidden');
-      const signatures = JSON.parse(localStorage.getItem('reportSignatures') || '{}');
-      signatures[`parent_${currentStudentId}`] = { image: dataURL, date: new Date().toISOString() };
-      localStorage.setItem('reportSignatures', JSON.stringify(signatures));
-      addAuditLog('Parent signature saved for report card');
+      autoSaveSignature('parent');
       showToast('Saved', 'Parent signature saved successfully');
     }
 
+    function resetParentSignature() {
+      const signatures = JSON.parse(localStorage.getItem('reportSignatures') || '{}');
+      delete signatures[`parent_${currentStudentId}`];
+      localStorage.setItem('reportSignatures', JSON.stringify(signatures));
+      document.getElementById('parentSignatureArea').classList.remove('hidden');
+      document.getElementById('parentSignatureStatus').classList.add('hidden');
+      if (parentSignaturePad) parentSignaturePad.clear();
+      document.getElementById('parentSignatureImage').src = '';
+    }
+
     // ==================== ADVISER SIGNATURE ====================
-    function clearAdviserSignature() { if (adviserSignaturePad) adviserSignaturePad.clear(); }
+    function clearAdviserSignature() {
+      if (adviserSignaturePad) {
+        adviserSignaturePad.clear();
+        showAutoSaveIndicator('adviser', 'saved');
+      }
+    }
 
     function saveAdviserSignature() {
       if (!adviserSignaturePad) return;
-      const dataURL = adviserSignaturePad.canvas.toDataURL('image/png');
       if (isCanvasEmpty(adviserSignaturePad.canvas)) { showToast('Error', 'Please draw your signature first', 'error'); return; }
-      adviserSignatureData = dataURL;
-      document.getElementById('adviserSignatureImage').src = dataURL;
-      document.getElementById('adviserSignDate').textContent = new Date().toLocaleString();
-      document.getElementById('adviserSignatureArea').classList.add('hidden');
-      document.getElementById('adviserSignatureStatus').classList.remove('hidden');
-      const signatures = JSON.parse(localStorage.getItem('reportSignatures') || '{}');
-      signatures['adviser'] = { image: dataURL, date: new Date().toISOString() };
-      localStorage.setItem('reportSignatures', JSON.stringify(signatures));
-      addAuditLog('Adviser signature saved for report card');
+      autoSaveSignature('adviser');
       showToast('Saved', 'Adviser signature saved successfully');
+    }
+
+    function resetAdviserSignature() {
+      const signatures = JSON.parse(localStorage.getItem('reportSignatures') || '{}');
+      delete signatures['adviser'];
+      localStorage.setItem('reportSignatures', JSON.stringify(signatures));
+      document.getElementById('adviserSignatureArea').classList.remove('hidden');
+      document.getElementById('adviserSignatureStatus').classList.add('hidden');
+      if (adviserSignaturePad) adviserSignaturePad.clear();
+      document.getElementById('adviserSignatureImage').src = '';
     }
 
     // ==================== UTILITY FUNCTIONS ====================
@@ -1431,9 +1513,13 @@
         document.getElementById('parentSignDate').textContent = new Date(parentSig.date).toLocaleString();
         document.getElementById('parentSignatureArea').classList.add('hidden');
         document.getElementById('parentSignatureStatus').classList.remove('hidden');
+        document.getElementById('parentAutoSaveIndicator').classList.add('hidden');
+        document.getElementById('parentSavedIndicator').classList.add('hidden');
       } else {
         document.getElementById('parentSignatureArea').classList.remove('hidden');
         document.getElementById('parentSignatureStatus').classList.add('hidden');
+        document.getElementById('parentAutoSaveIndicator').classList.add('hidden');
+        document.getElementById('parentSavedIndicator').classList.add('hidden');
         if (parentSignaturePad) parentSignaturePad.clear();
       }
       if (adviserSig) {
@@ -1441,9 +1527,13 @@
         document.getElementById('adviserSignDate').textContent = new Date(adviserSig.date).toLocaleString();
         document.getElementById('adviserSignatureArea').classList.add('hidden');
         document.getElementById('adviserSignatureStatus').classList.remove('hidden');
+        document.getElementById('adviserAutoSaveIndicator').classList.add('hidden');
+        document.getElementById('adviserSavedIndicator').classList.add('hidden');
       } else {
         document.getElementById('adviserSignatureArea').classList.remove('hidden');
         document.getElementById('adviserSignatureStatus').classList.add('hidden');
+        document.getElementById('adviserAutoSaveIndicator').classList.add('hidden');
+        document.getElementById('adviserSavedIndicator').classList.add('hidden');
         if (adviserSignaturePad) adviserSignaturePad.clear();
       }
     }
